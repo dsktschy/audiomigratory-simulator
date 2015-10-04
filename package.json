@@ -1,0 +1,55 @@
+{
+  "name": "editable-ssg-es6",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test"   : "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "4.13.x",
+    "morgan": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "errorhandler": "*",
+    "serve-favicon": "*",
+    "socket.io": "1.3.7",
+    "mongodb": "*",
+    "JSV": "*"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-uglify": "*",
+    "gulp-rename": "*",
+    "del": "*",
+    "gulp-eslint": "*",
+    "gulp-if": "*",
+    "gulp-load-plugins": "*",
+    "gulp-plumber": "*",
+    "gulp-notify": "*",
+    "gulp-sass": "*",
+    "gulp-sass-lint": "*",
+    "gulp-cssmin": "*",
+    "gulp-htmlhint": "*",
+    "browserify": "*",
+    "vinyl-source-stream": "*",
+    "browserify-shim": "*",
+    "gulp-sourcemaps": "*",
+    "vinyl-buffer": "*",
+    "browser-sync": "*",
+    "babel-runtime": "*",
+    "gulp-concat": "*",
+    "gulp-nodemon": "2.0.3",
+    "nodemon": "1.3.x"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:$",
+    "taffydb": "global:TAFFY",
+    "socketio": "global:io"
+  }
+}
