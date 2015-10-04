@@ -177,13 +177,28 @@ gulp.task('css-concat', ['sass'], () => {
   return gulp
     .src([
       `${srcCSSDir}**/*.css`,
-    ])
+    ], {base: srcCSSDir})
     .pipe($.plumber(plumberOpt))
     .pipe($.concat('bundle.css'))
     .pipe(gulp.dest(srcCSSDir));
 });
 
-gulp.task('cssmin', ['css-concat'], () => {
+gulp.task('pleeease', ['css-concat'], () => {
+  return gulp
+    .src([
+      `${srcCSSDir}bundle.css`,
+    ], {base: srcCSSDir})
+    .pipe($.plumber(plumberOpt))
+    .pipe($.pleeease({
+      'autoprefixer': {'browsers': ['last 4 versions']},
+      'rem': true,
+      'minifier': false,
+      'sourcemaps': false,
+    }))
+    .pipe(gulp.dest(srcCSSDir));
+});
+
+gulp.task('cssmin', ['pleeease'], () => {
   return gulp
     .src([
       `${srcCSSDir}bundle.css`,
