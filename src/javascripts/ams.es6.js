@@ -7,7 +7,7 @@ const
   MOD_NAME = 'ams',
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`;
 
-var init, jqueryMap, setJqueryMap;
+var init, jqueryMap, setJqueryMap, map;
 
 /**
  * jqueryオブジェクトを保持
@@ -28,6 +28,7 @@ init = ($wrapper) => {
   amsMap.init(jqueryMap[`$${MOD_NAME}`]);
   amsIcons.init(jqueryMap[`$${MOD_NAME}`]);
   amsInfo.init(jqueryMap[`$${MOD_NAME}`]);
+  map = amsMap.create();
 };
 
 export default {

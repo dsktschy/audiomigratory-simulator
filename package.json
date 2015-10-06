@@ -51,6 +51,7 @@
   "browserify-shim": {
     "jquery": "global:$",
     "taffydb": "global:TAFFY",
-    "socketio": "global:io"
+    "socketio": "global:io",
+    "google": "global:google"
   }
 }
