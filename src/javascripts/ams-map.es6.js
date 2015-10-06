@@ -36,16 +36,9 @@ const
       elementType: 'all',
       stylers: [{visibility: 'on'}],
     },
-  ]),
-  CURRENT_POS_TIMEOUT = 30000,
-  CURRENT_POS_MAXIMUM_AGE = 0,
-  POS_OPT_MAP = {
-    enableHighAccuracy: true,
-    timeout: CURRENT_POS_TIMEOUT,
-    maximumAge: CURRENT_POS_MAXIMUM_AGE,
-  };
+  ]);
 
-var init, jqueryMap, setJqueryMap, create, createByCurrentPosition;
+var init, jqueryMap, setJqueryMap, create;
 
 /**
  * jqueryオブジェクトを保持
@@ -77,22 +70,7 @@ create = () => {
   return map;
 };
 
-/**
- * 現在地を取得した後にcreate
- * @exports
- */
-createByCurrentPosition = () => {
-  navigator.geolocation.getCurrentPosition(
-    ({coords: {latitude, longitude}}) => {
-      MAP_OPT_MAP.center = new GM.LatLng(latitude, longitude);
-      create();
-    },
-    create,
-    POS_OPT_MAP
-  );
-};
-
 export default {
   init,
-  create: navigator.geolocation ? createByCurrentPosition : create,
+  create,
 };
