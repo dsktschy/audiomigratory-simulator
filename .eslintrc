@@ -67,5 +67,8 @@
   },
   "ecmaFeatures": {
     "modules": true
+  },
+  "globals": {
+    "FAKE_DATA": true
   }
 }

@@ -1,5 +1,8 @@
 import $ from 'jquery';
 import google from 'google';
+import _amsData from './ams-data';
+import _amsDataFake from './ams-data-fake';
+import amsModel from './ams-model';
 import amsMap from './ams-map';
 import amsMarker from './ams-marker';
 import amsIcons from './ams-icons';
@@ -15,10 +18,11 @@ const
     enableHighAccuracy: true,
     timeout: CURRENT_POS_TIMEOUT,
     maximumAge: CURRENT_POS_MAXIMUM_AGE,
-  };
+  },
+  IS_FAKE = true;
 
 var
-  init, jqueryMap, setJqueryMap, map, marker, getCurrPos, onClickMap,
+  init, jqueryMap, setJqueryMap, map, marker, getCurrPos, onClickMap, amsData,
   onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker;
 
 /**
@@ -53,6 +57,7 @@ onSuccessToGetCurrPos = ({coords: {latitude, longitude}}) => {
   map.setCenter(latLng);
   marker.setPosition(latLng);
   marker.setVisible(true);
+  amsModel.applyData(latitude, longitude);
 };
 
 /**
@@ -60,6 +65,7 @@ onSuccessToGetCurrPos = ({coords: {latitude, longitude}}) => {
  */
 onErrorToGetCurrPos = (e) => {
   marker.setVisible(true);
+  amsModel.applyData(map.getCenter().lat(), map.getCenter().lng());
   console.log(e);
 };
 
@@ -80,6 +86,9 @@ getCurrPos = (onSuccess, onError, optMap) => {
 init = ($wrapper) => {
   $wrapper.append(HTML);
   setJqueryMap();
+  amsData = IS_FAKE ? _amsDataFake : _amsData;
+  amsData.init();
+  amsModel.init(amsData);
   amsMap.init(jqueryMap[`$${MOD_NAME}`]);
   amsIcons.init(jqueryMap[`$${MOD_NAME}`]);
   amsInfo.init(jqueryMap[`$${MOD_NAME}`]);
