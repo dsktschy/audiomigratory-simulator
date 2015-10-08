@@ -36,41 +36,25 @@ const
       elementType: 'all',
       stylers: [{visibility: 'on'}],
     },
-  ]);
+  ]),
+  MAP_TYPE_ID = 'ams';
 
-var init, jqueryMap, setJqueryMap, create;
-
-/**
- * jqueryオブジェクトを保持
- */
-setJqueryMap = () => {
-  jqueryMap = {
-    [`$${MOD_NAME}`]: $(`#${MOD_NAME}`),
-  };
-};
+var AmsMap;
 
 /**
- * module起動
+ * AMS用に設定されたGM.Mapクラス
  * @exports
  */
-init = ($wrapper) => {
-  $wrapper.append(HTML);
-  setJqueryMap();
+AmsMap = class extends GM.Map {
+  /**
+   * constructor
+   */
+  constructor($wrapper) {
+    $wrapper.append(HTML);
+    super($(`#${MOD_NAME}`)[0], MAP_OPT_MAP);
+    this.mapTypes.set(MAP_TYPE_ID, STYLED_MAP_TYPE);
+    this.setMapTypeId(MAP_TYPE_ID);
+  }
 };
 
-/**
- * ams用にmapオブジェクトを作成して返す
- * @exports
- */
-create = () => {
-  var map;
-  map = new GM.Map(jqueryMap[`$${MOD_NAME}`][0], MAP_OPT_MAP);
-  map.mapTypes.set('ams', STYLED_MAP_TYPE);
-  map.setMapTypeId('ams');
-  return map;
-};
-
-export default {
-  init,
-  create,
-};
+export default AmsMap;

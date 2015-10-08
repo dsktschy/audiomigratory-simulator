@@ -3,8 +3,8 @@ import google from 'google';
 import _amsData from './ams-data';
 import _amsDataFake from './ams-data-fake';
 import amsModel from './ams-model';
-import amsMap from './ams-map';
-import amsMarker from './ams-marker';
+import AmsMap from './ams-map';
+import AmsMarker from './ams-marker';
 import amsIcons from './ams-icons';
 import amsInfo from './ams-info';
 
@@ -89,11 +89,10 @@ init = ($wrapper) => {
   amsData = IS_FAKE ? _amsDataFake : _amsData;
   amsData.init();
   amsModel.init(amsData);
-  amsMap.init(jqueryMap[`$${MOD_NAME}`]);
   amsIcons.init(jqueryMap[`$${MOD_NAME}`]);
   amsInfo.init(jqueryMap[`$${MOD_NAME}`]);
-  map = amsMap.create();
-  marker = amsMarker.create(map);
+  map = new AmsMap(jqueryMap[`$${MOD_NAME}`]);
+  marker = new AmsMarker(map);
   marker.setVisible(false);
   GM.event.addListener(map, 'click', onClickMap);
   GM.event.addListener(marker, 'click', onClickMarker);

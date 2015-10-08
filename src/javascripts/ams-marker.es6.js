@@ -1,7 +1,6 @@
 import google from 'google';
 
 const
-  MOD_NAME = 'ams-marker',
   GM = google.maps,
   RADIUS = 10,
   STROKE_WEIGHT = 4,
@@ -21,20 +20,21 @@ const
     },
   };
 
-var create;
+var AmsMarker;
 
 /**
- * ams用にmarkerオブジェクトを作成して返す
+ * AMS用に設定されたGM.Markerクラス
  * @exports
  */
-create = (map) => {
-  var marker;
-  MARKER_OPT_MAP.map = map;
-  MARKER_OPT_MAP.position = map.getCenter();
-  marker = new GM.Marker(MARKER_OPT_MAP);
-  return marker;
+AmsMarker = class extends GM.Marker {
+  /**
+   * constructor
+   */
+  constructor(map) {
+    MARKER_OPT_MAP.map = map;
+    MARKER_OPT_MAP.position = map.getCenter();
+    super(MARKER_OPT_MAP);
+  }
 };
 
-export default {
-  create,
-};
+export default AmsMarker;
