@@ -52,6 +52,7 @@
     "jquery": "global:$",
     "taffydb": "global:TAFFY",
     "socketio": "global:io",
-    "google": "global:google"
+    "google": "global:google",
+    "infobox": "global:InfoBox"
   }
 }

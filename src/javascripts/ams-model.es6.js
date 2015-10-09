@@ -1,12 +1,18 @@
+import $ from 'jquery';
+
 var
-  init, data, applyData, amsData, onSuccessToGetParsedData,
+  init, applyData, amsData, onSuccessToGetParsedData,
   onErrorToGetParsedData;
 
 /**
  * データ取得成功時のコールバック
  */
-onSuccessToGetParsedData = (_data) => {
-  data = _data;
+onSuccessToGetParsedData = (data) => {
+  if (!data.status) {
+    console.log('json.status: 0');
+    return;
+  }
+  $(window).trigger('apply-data', data.result);
 };
 
 /**

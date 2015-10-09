@@ -1,0 +1,53 @@
+.info-box {
+  $white: #fff;
+  $gray: #888;
+  $shadowColor: rgba(0, 0, 0, .6);
+  position: relative;
+  margin: 0 0 7px 0;
+  padding: 5px 5px 2px 5px;
+  background: $white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px 0 $shadowColor;
+
+  &:before {
+    position: absolute;
+    margin: 45px 0 0 calc(50% - 12px);
+    border: 8px solid;
+    border-color: transparent $white $white transparent;
+    content: '';
+    transform: rotate(45deg);
+    box-shadow: 4px 4px 6px 0 $shadowColor;
+
+    // FireFoxのみ基準位置が異なるためずらす
+    @-moz-document url-prefix() {
+      margin: 45px 0 0 calc(-100% + 10px + 50% - 12px);
+    }
+  }
+
+  &:after {
+    content: '';
+    clear: both;
+    display: block;
+  }
+
+  p {
+    float: left;
+    white-space: nowrap;
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .gray {
+      color: $gray;
+    }
+
+    &:not(:first-child) {
+      margin: 0 0 0 5px;
+    }
+  }
+
+  img {
+    border-radius: 8px;
+  }
+}

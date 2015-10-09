@@ -5,6 +5,7 @@ import _amsDataFake from './ams-data-fake';
 import amsModel from './ams-model';
 import AmsMap from './ams-map';
 import AmsMarker from './ams-marker';
+import Playlist from './ams-playlist';
 import amsIcons from './ams-icons';
 import amsInfo from './ams-info';
 
@@ -22,8 +23,14 @@ const
   IS_FAKE = true;
 
 var
-  init, jqueryMap, setJqueryMap, map, marker, getCurrPos, onClickMap, amsData,
-  onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker;
+  init, jqueryMap, setJqueryMap, map, marker, playlists, getCurrPos, amsData,
+  onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker, onApplyData,
+  onClickMap, onDomready, onClickPlaylist;
+
+/**
+ * プレイリスト配列
+ */
+playlists = [];
 
 /**
  * jqueryオブジェクトを保持
@@ -70,6 +77,38 @@ onErrorToGetCurrPos = (e) => {
 };
 
 /**
+ * Playlistオブジェクトcontentプロパティ描画完了時のハンドラー
+ */
+onDomready = () => {
+
+};
+
+/**
+ * Playlistオブジェクトクリック時のハンドラー
+ */
+onClickPlaylist = () => {
+
+};
+
+/**
+ * データ取得完了時のコールバック
+ */
+onApplyData = (event, data) => {
+  if (!parseInt(data.hits, 10)) {
+    console.log('json.result.hits: 0');
+    return;
+  }
+  for (let _data of data.playlists) {
+    var playlist;
+    playlist = new Playlist(_data);
+    GM.event.addListener(playlist, 'domready', onDomready);
+    $(playlist.getContent()).children().first().on('click', onClickPlaylist);
+    playlist.open(map);
+    playlists.push(playlist);
+  }
+};
+
+/**
  * 現在地を取得してコールバックに渡す
  */
 getCurrPos = (onSuccess, onError, optMap) => {
@@ -96,6 +135,7 @@ init = ($wrapper) => {
   marker.setVisible(false);
   GM.event.addListener(map, 'click', onClickMap);
   GM.event.addListener(marker, 'click', onClickMarker);
+  $(window).on('apply-data', onApplyData);
   getCurrPos(onSuccessToGetCurrPos, onErrorToGetCurrPos, POS_OPT_MAP);
 };
 
