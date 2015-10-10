@@ -1,21 +1,8 @@
-import $ from 'jquery';
-import google from 'google';
 import AmsInfoBox from './ams-info-box';
+import Track from './ams-track';
 
 const
-  GM = google.maps,
-  DEFAULT_ICON_IMG_SRC = '',
-  ICON_SIZE = 48,
-  INFO_BOX_SIZE = Math.floor( ICON_SIZE + ICON_SIZE / 10 ),
-  PLAYLIST_OPT_MAP = {
-    position: undefined,
-    content: undefined,
-    disableAutoPan: true,
-    closeBoxURL: '',
-    alignBottom: true,
-    pixelOffset: new GM.Size( -( INFO_BOX_SIZE / 2 ), 0 ),
-    maxWidth: 0,
-  };
+  DEFAULT_JACKET = '';
 
 var Playlist;
 
@@ -26,22 +13,18 @@ var Playlist;
 Playlist = class extends AmsInfoBox {
   /**
    * constructor
+   *   Trackと扱いを揃えるため
+   *   latlngプロパティをlat,lngプロパティに分解する
+   * @param {Object} data APIから取得したJSONデータのplaylists[i]
    */
   constructor(data) {
-    var lat, lng, src;
-    [lat, lng] = data.latlng.split(',');
-    lat = parseFloat(lat);
-    lng = parseFloat(lng);
-    src = data.jacket || data.user_img || DEFAULT_ICON_IMG_SRC;
-    PLAYLIST_OPT_MAP.position = new GM.LatLng(lat, lng);
-    PLAYLIST_OPT_MAP.content = $(
-      '<div class="info-box">' +
-        '<p>' +
-          `<img src=${src} width=${ICON_SIZE} height=${ICON_SIZE}>` +
-        '</p>' +
-      '</div>'
-    )[0];
-    super(PLAYLIST_OPT_MAP);
+    [data.lat, data.lng] = data.latlng.split(',');
+    data.img = data.jacket || data.user_img || DEFAULT_JACKET;
+    super(data);
+    this.tracks = [];
+    for (let _data of data.tracks) {
+      this.tracks.push(new Track(_data, this.img));
+    }
   }
 };
 
