@@ -20,13 +20,13 @@ const
     },
   };
 
-var AmsMarker;
+var AMSMarker;
 
 /**
  * AMS用に設定されたGM.Markerクラス
  * @exports
  */
-AmsMarker = class extends GM.Marker {
+AMSMarker = class extends GM.Marker {
   /**
    * constructor
    */
@@ -37,4 +37,4 @@ AmsMarker = class extends GM.Marker {
   }
 };
 
-export default AmsMarker;
+export default AMSMarker;

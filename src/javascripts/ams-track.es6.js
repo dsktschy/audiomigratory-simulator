@@ -1,4 +1,4 @@
-import AmsInfoBox from './ams-info-box';
+import AMSInfoBox from './ams-info-box';
 
 var Track;
 
@@ -6,7 +6,7 @@ var Track;
  * トラッククラス
  * @exports
  */
-Track = class extends AmsInfoBox {
+Track = class extends AMSInfoBox {
   /**
    * constructor
    * @param {Object} data APIから取得したJSONデータのplaylists[i]

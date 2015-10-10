@@ -23,7 +23,7 @@ const
     'lng',
   ];
 
-var AmsInfoBox;
+var AMSInfoBox;
 
 // コンストラクタのprototype.constructorプロパティを
 // 継承元クラスコンストラクタから自身のコンストラクタに戻す処理が
@@ -40,7 +40,7 @@ Object.defineProperty(InfoBox.prototype, 'constructor', {
  * AMS用に拡張したInfoBoxクラス
  * @exports
  */
-AmsInfoBox = class extends InfoBox {
+AMSInfoBox = class extends InfoBox {
   /**
    * constructor
    */
@@ -66,4 +66,4 @@ AmsInfoBox = class extends InfoBox {
   }
 };
 
-export default AmsInfoBox;
+export default AMSInfoBox;

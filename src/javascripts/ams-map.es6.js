@@ -39,13 +39,13 @@ const
   ]),
   MAP_TYPE_ID = 'ams';
 
-var AmsMap;
+var AMSMap;
 
 /**
  * AMS用に設定されたGM.Mapクラス
  * @exports
  */
-AmsMap = class extends GM.Map {
+AMSMap = class extends GM.Map {
   /**
    * constructor
    */
@@ -57,4 +57,4 @@ AmsMap = class extends GM.Map {
   }
 };
 
-export default AmsMap;
+export default AMSMap;

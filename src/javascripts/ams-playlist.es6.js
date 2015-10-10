@@ -1,4 +1,4 @@
-import AmsInfoBox from './ams-info-box';
+import AMSInfoBox from './ams-info-box';
 import Track from './ams-track';
 
 const
@@ -10,7 +10,7 @@ var Playlist;
  * プレイリストクラス
  * @exports
  */
-Playlist = class extends AmsInfoBox {
+Playlist = class extends AMSInfoBox {
   /**
    * constructor
    *   Trackと扱いを揃えるため
