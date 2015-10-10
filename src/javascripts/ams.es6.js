@@ -10,16 +10,23 @@ import amsIcons from './ams-icons';
 import amsInfo from './ams-info';
 
 const
+  /** モジュール名 */
   MOD_NAME = 'ams',
+  /** HTML */
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`,
+  /** ショートカット */
   GM = google.maps,
+  /** 現在地取得時のタイムアウト時間(msec) */
   CURRENT_POS_TIMEOUT = 10000,
+  /** 現在地情報のキャッシュ有効時間 */
   CURRENT_POS_MAXIMUM_AGE = 0,
+  /** 現在地取得時のオプション */
   POS_OPT_MAP = {
     enableHighAccuracy: true,
     timeout: CURRENT_POS_TIMEOUT,
     maximumAge: CURRENT_POS_MAXIMUM_AGE,
   },
+  /** APIの代わりにFAKE_DATAを使用するかどうか */
   IS_FAKE = true;
 
 var

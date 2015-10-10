@@ -2,12 +2,19 @@ import $ from 'jquery';
 import google from 'google';
 
 const
+  /** モジュール名 */
   MOD_NAME = 'ams-map',
+  /** HTML */
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`,
+  /** ショートカット */
   GM = google.maps,
+  /** 初期ズームレベル */
   DEFAULT_ZOOM = 11,
+  /** 位置情報取得失敗時に使用する緯度 */
   DEFAULT_LAT = 35.689634,
+  /** 位置情報取得失敗時に使用する経度 */
   DEFAULT_LNG = 139.692101,
+  /** GM.Mapコンストラクターに渡すオプション */
   MAP_OPT_MAP = {
     zoom: DEFAULT_ZOOM,
     center: new GM.LatLng(DEFAULT_LAT, DEFAULT_LNG),
@@ -20,6 +27,7 @@ const
     overviewMapControl: false,
     mapTypeControl: false,
   },
+  /** Mapのスタイル設定 */
   STYLED_MAP_TYPE = new GM.StyledMapType([
     {
       featureType: 'all',
@@ -37,6 +45,7 @@ const
       stylers: [{visibility: 'on'}],
     },
   ]),
+  /** MapTypeID */
   MAP_TYPE_ID = 'ams';
 
 var AMSMap;

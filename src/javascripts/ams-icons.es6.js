@@ -1,7 +1,9 @@
 import $ from 'jquery';
 
 const
+  /** モジュール名 */
   MOD_NAME = 'ams-icons',
+  /** アイコン情報 */
   ICON_MAP_ = new Map([
     ['main', {
       href: '//audiomigratory.com/',
@@ -22,9 +24,13 @@ const
       html: undefined,
     }],
   ]),
+  /** アイコンの幅(px) */
   ICON_WIDTH = 36,
+  /** アイコンの高さ(px) */
   ICON_HEIGHT = 36,
+  /** img要素のサイズ属性部分 */
   SIZE_ATTR = `width="${ICON_WIDTH}" height="${ICON_HEIGHT}"`,
+  /** HTML */
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`;
 
 var init, jqueryMap, setJqueryMap;

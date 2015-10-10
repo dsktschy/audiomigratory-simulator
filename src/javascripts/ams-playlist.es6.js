@@ -2,6 +2,7 @@ import AMSInfoBox from './ams-info-box';
 import Track from './ams-track';
 
 const
+  /** ジャケットが存在しない場合に使用する画像のパス */
   DEFAULT_JACKET = '';
 
 var Playlist;

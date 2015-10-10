@@ -1,8 +1,11 @@
 import $ from 'jquery';
 
 const
+  /** FAKE_DATAを定義するjsファイルのindex.htmlからの相対パス */
   SRC = 'javascripts/fake-data.js',
+  /** SRCを読み込むためのscriptタグ */
   HTML = `<script type="text/javascript" src="${SRC}"></script>`,
+  /** 本来のデータ取得処理を模倣するための応答遅延時間(msec) */
   DELAY = 3000;
 
 var init, getParsedData;

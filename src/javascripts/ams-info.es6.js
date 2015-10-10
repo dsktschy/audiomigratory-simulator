@@ -1,7 +1,9 @@
 import $ from 'jquery';
 
 const
+  /** モジュール名 */
   MOD_NAME = 'ams-info',
+  /** HTML */
   HTML = '' +
     `<div id="${MOD_NAME}" class="${MOD_NAME}">` +
       '<p class="title"></p>' +

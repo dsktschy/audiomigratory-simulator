@@ -3,10 +3,15 @@ import google from 'google';
 import InfoBox from 'infobox';
 
 const
+  /** ショートカット */
   GM = google.maps,
+  /** contentプロパティの要素のクラス */
   CONTENT_ELEM_CLASS = 'info-box',
+  /** ジャケット,音符アイコンの一辺(px) */
   ICON_SIZE = 48,
+  /** InfoBoxの一辺(px) */
   INFO_BOX_SIZE = Math.floor( ICON_SIZE + ICON_SIZE / 10 ),
+  /** InfoBoxコンストラクターに渡すオプション */
   INFO_BOX_OPT_MAP = {
     position: undefined,
     content: undefined,
@@ -16,6 +21,7 @@ const
     pixelOffset: new GM.Size( -( INFO_BOX_SIZE / 2 ), 0 ),
     maxWidth: 0,
   },
+  /** constructorに渡されるデータからインスタンスにコピーしないプロパティのキー */
   EXCLUDED_KEYS = [
     'tracks',
     'latlng',
