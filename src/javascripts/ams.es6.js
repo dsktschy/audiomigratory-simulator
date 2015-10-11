@@ -32,7 +32,7 @@ const
 var
   init, jqueryMap, setJqueryMap, map, marker, playlists, getCurrPos, amsData,
   onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker, onApplyData,
-  onClickMap, onDomready, onClickPlaylist;
+  onClickMap, onDomready, onClickJacket, onClickNoteIcon;
 
 /**
  * プレイリスト配列
@@ -91,9 +91,16 @@ onDomready = () => {
 };
 
 /**
- * Playlistオブジェクトクリック時のハンドラー
+ * Playlistジャケットクリック時のハンドラー
  */
-onClickPlaylist = () => {
+onClickJacket = () => {
+
+};
+
+/**
+ * Playlist音符アイコンクリック時のハンドラー
+ */
+onClickNoteIcon = () => {
 
 };
 
@@ -109,8 +116,10 @@ onApplyData = (event, data) => {
     var playlist;
     playlist = new Playlist(_data);
     playlist.addListener('domready', onDomready);
-    $(playlist.getContent()).children().first().on('click', onClickPlaylist);
+    playlist.addListnerToJacket('click', onClickJacket);
+    playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     playlist.open(map);
+    playlist.closeDetail();
     playlists.push(playlist);
   }
 };

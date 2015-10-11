@@ -13,8 +13,14 @@ Track = class extends AMSInfoBox {
    * @param {string} defaultJacket ジャケットが存在しない場合に使用する画像
    */
   constructor(data, defaultJacket) {
+    var detail;
     data.img = data.jacket || data.user_img || defaultJacket;
-    super(data);
+    detail = '' +
+      '<p>' +
+        `<span class="bold">${data.title}</span><br>` +
+        `<span class="gray">${data.user_name}</span>` +
+      '</p>';
+    super(data, detail);
   }
 };
 

@@ -50,18 +50,18 @@ AMSInfoBox = class extends InfoBox {
   /**
    * constructor
    */
-  constructor(data) {
+  constructor(data, detail = '') {
     var lat, lng;
     lat = parseFloat(data.lat);
     lng = parseFloat(data.lng);
     INFO_BOX_OPT_MAP.position = new GM.LatLng(lat, lng);
-    INFO_BOX_OPT_MAP.content = $(
+    INFO_BOX_OPT_MAP.content = '' +
       `<div class="${CONTENT_ELEM_CLASS}">` +
         '<p>' +
           `<img src=${data.img} width=${ICON_SIZE} height=${ICON_SIZE}>` +
         '</p>' +
-      '</div>'
-    )[0];
+        detail +
+      '</div>';
     super(INFO_BOX_OPT_MAP);
     for (let key in data) {
       if (!data.hasOwnProperty(key) || EXCLUDED_KEYS.indexOf(key) !== -1) {
@@ -70,6 +70,36 @@ AMSInfoBox = class extends InfoBox {
       this[key] = data[key];
     }
   }
+  /**
+   * ジャケットにイベントハンドラーを設定
+   */
+  addListnerToJacket(eventname, handler) {
+    var $content;
+    $content = $(this.getContent());
+    $content.children(':first').on(eventname, handler);
+    this.setContent($content[0]);
+  }
+  /**
+   * detailModeに切り替え
+   */
+  openDetail() {
+    var $content;
+    $content = $(this.getContent());
+    $content.children(':not(:first)').css('display', 'block');
+    this.setContent($content[0]);
+  }
+  /**
+   * detailMode解除
+   */
+  closeDetail() {
+    var $content;
+    $content = $(this.getContent());
+    $content.children(':not(:first)').css('display', 'none');
+    this.setContent($content[0]);
+  }
 };
+
+/** export先でもICON_SIZEを使用可能にしておく */
+AMSInfoBox.ICON_SIZE = ICON_SIZE;
 
 export default AMSInfoBox;
