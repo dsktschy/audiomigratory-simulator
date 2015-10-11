@@ -108,7 +108,7 @@ onApplyData = (event, data) => {
   for (let _data of data.playlists) {
     var playlist;
     playlist = new Playlist(_data);
-    GM.event.addListener(playlist, 'domready', onDomready);
+    playlist.addListener('domready', onDomready);
     $(playlist.getContent()).children().first().on('click', onClickPlaylist);
     playlist.open(map);
     playlists.push(playlist);
@@ -140,8 +140,8 @@ init = ($wrapper) => {
   map = new AMSMap(jqueryMap[`$${MOD_NAME}`]);
   marker = new AMSMarker(map);
   marker.setVisible(false);
-  GM.event.addListener(map, 'click', onClickMap);
-  GM.event.addListener(marker, 'click', onClickMarker);
+  map.addListener('click', onClickMap);
+  marker.addListener('click', onClickMarker);
   $(window).on('apply-data', onApplyData);
   getCurrPos(onSuccessToGetCurrPos, onErrorToGetCurrPos, POS_OPT_MAP);
 };
