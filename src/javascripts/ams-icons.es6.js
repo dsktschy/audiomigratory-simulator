@@ -7,20 +7,20 @@ const
   ICON_MAP_ = new Map([
     ['main', {
       href: '//audiomigratory.com/',
-      src: 'images/am_icon.png',
-      alt: 'am_icon',
+      src: 'images/am-icon.png',
+      alt: 'am-icon',
       html: undefined,
     }],
     ['twitter', {
       href: '//twitter.com/audiomigratory',
-      src: 'images/twitter_icon.gif',
-      alt: 'twitter_icon',
+      src: 'images/twitter-icon.gif',
+      alt: 'twitter-icon',
       html: undefined,
     }],
     ['facebook', {
       href: '//www.facebook.com/ryu.furusawa',
-      src: 'images/facebook_icon.gif',
-      alt: 'facebook_icon',
+      src: 'images/facebook-icon.gif',
+      alt: 'facebook-icon',
       html: undefined,
     }],
   ]),
