@@ -86,8 +86,8 @@ onErrorToGetCurrPos = (e) => {
 /**
  * Playlistオブジェクトcontentプロパティ描画完了時のハンドラー
  */
-onDomready = () => {
-
+onDomready = (playlist) => {
+  playlist.closeDetail();
 };
 
 /**
@@ -115,11 +115,10 @@ onApplyData = (event, data) => {
   for (let _data of data.playlists) {
     var playlist;
     playlist = new Playlist(_data);
-    playlist.addListener('domready', onDomready);
+    playlist.addListener('domready', onDomready.bind(null, playlist));
     playlist.addListnerToJacket('click', onClickJacket);
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     playlist.open(map);
-    playlist.closeDetail();
     playlists.push(playlist);
   }
 };

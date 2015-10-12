@@ -11,6 +11,14 @@ const
   ICON_SIZE = 48,
   /** InfoBoxの一辺(px) */
   INFO_BOX_SIZE = Math.floor( ICON_SIZE + ICON_SIZE / 10 ),
+  /** InfoBoxの左右のpadding(px) */
+  INFO_BOX_PADDING_LR = 10,
+  /** InfoBoxの中央カラムのpadding-left(px) */
+  DETAIL_COLUMN_PADDING_L = 5,
+  /** webkit以外では反映されないfont-weight:bold;による広がり幅の近似値(px) */
+  BOLD_OFFSET = 2,
+  /** 非detailMode時のInfoBoxのwidth */
+  DETAIL_CLOSED_WIDTH = INFO_BOX_SIZE + INFO_BOX_PADDING_LR,
   /** InfoBoxコンストラクターに渡すオプション */
   INFO_BOX_OPT_MAP = {
     position: undefined,
@@ -18,7 +26,7 @@ const
     disableAutoPan: true,
     closeBoxURL: '',
     alignBottom: true,
-    pixelOffset: new GM.Size( -( INFO_BOX_SIZE / 2 ), 0 ),
+    pixelOffset: new GM.Size(-(DETAIL_CLOSED_WIDTH / 2), 0),
     maxWidth: 0,
   },
   /** constructorに渡されるデータからインスタンスにコピーしないプロパティのキー */
@@ -81,21 +89,60 @@ AMSInfoBox = class extends InfoBox {
   }
   /**
    * detailModeに切り替え
+   *   widthはsetContentの処理内で内容に合わせて再設定されるためsetOptionsはその後で
    */
   openDetail() {
-    var $content;
+    var $content, width;
     $content = $(this.getContent());
     $content.children(':not(:first)').css('display', 'block');
     this.setContent($content[0]);
+    width = AMSInfoBox.getFixedOuterWidth($content);
+    this.setOptions({
+      boxStyle: {width: `${width}px`},
+      pixelOffset: new GM.Size(-(width / 2), 0),
+    });
   }
   /**
    * detailMode解除
+   *   widthはsetContentの処理内で内容に合わせて再設定されるためsetOptionsでは省略
    */
   closeDetail() {
     var $content;
     $content = $(this.getContent());
     $content.children(':not(:first)').css('display', 'none');
     this.setContent($content[0]);
+    this.setOptions({
+      pixelOffset: new GM.Size(-(DETAIL_CLOSED_WIDTH / 2), 0),
+    });
+  }
+  /**
+   * infoBoxのwidthがautoでは内容量と合致しない場合があるため矯正する
+   */
+  static getFixedOuterWidth($content) {
+    var width;
+    width = INFO_BOX_PADDING_LR;
+    $content.children().each((index, elem) => {
+      width += index === 1
+        ? AMSInfoBox.getDetailColumnOuterWidth(elem)
+        : $(elem).outerWidth(true);
+    });
+    return width;
+  }
+  /**
+   * font-weight:bold;で広がった幅を反映した正しいouterWidth(の近似値)を算出
+   *   webkit以外では広がった幅がouterWidthに反映されない
+   *   上下2行あるうち広い方の幅を使用する
+   */
+  static getDetailColumnOuterWidth(column) {
+    var $column, largerWidth;
+    $column = $(column);
+    largerWidth = 0;
+    $column.children().each((index, elem) => {
+      largerWidth = $(elem).outerWidth(false) > largerWidth
+        ? $(elem).outerWidth(false)
+        : largerWidth;
+    });
+    return DETAIL_COLUMN_PADDING_L + largerWidth + BOLD_OFFSET;
   }
 };
 
