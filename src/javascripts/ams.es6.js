@@ -62,13 +62,6 @@ onClickMap = (event) => {
 };
 
 /**
- * markerクリックイベントのハンドラー
- */
-onClickMarker = () => {
-
-};
-
-/**
  * 現在地取得成功時のコールバック
  */
 onSuccessToGetCurrPos = ({coords: {latitude, longitude}}) => {
@@ -101,6 +94,7 @@ onPlaylistDomready = (playlist) => {
  */
 onTrackDomready = (track) => {
   track.closeDetail();
+  track.setVisible(false);
 };
 
 /**
@@ -139,12 +133,30 @@ onClickTrackJacket = (track) => {
  */
 onClickNoteIcon = () => {
   for (let playlist of playlists) {
-    playlist.close();
+    playlist.setVisible(false);
   }
   for (let track of selectedPlaylist.tracks) {
-    track.open(map);
+    track.setVisible(true);
   }
   isPlayMode = true;
+  return false;
+};
+
+/**
+ * markerクリックイベントのハンドラー
+ *   再生モードから抜ける
+ */
+onClickMarker = () => {
+  if (!isPlayMode) {
+    return;
+  }
+  for (let track of selectedPlaylist.tracks) {
+    track.setVisible(false);
+  }
+  for (let playlist of playlists) {
+    playlist.setVisible(true);
+  }
+  isPlayMode = false;
   return false;
 };
 
@@ -165,14 +177,15 @@ onApplyData = (event, data) => {
       onClickPlaylistJacket.bind(null, playlist)
     );
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
+    playlist.open(map);
     for (let track of playlist.tracks) {
       track.addListener('domready', onTrackDomready.bind(null, track));
       track.addListnerToJacket(
         'click',
         onClickTrackJacket.bind(null, track)
       );
+      track.open(map);
     }
-    playlist.open(map);
     playlists.push(playlist);
   }
 };
