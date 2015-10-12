@@ -32,13 +32,16 @@ const
 var
   init, jqueryMap, setJqueryMap, map, marker, playlists, getCurrPos, amsData,
   onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker, onApplyData,
-  onClickMap, onPlaylistDomready, onClickJacket, onClickNoteIcon, selectedPlaylist,
-  isPlayMode, onTrackDomready;
+  onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
+  onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode,
+  onTrackDomready;
 
 /** プレイリスト配列 */
 playlists = [];
 /** 選択中のプレイリスト */
 selectedPlaylist = null;
+/** 選択中のトラック */
+selectedTrack = null;
 /** 再生モードかどうか */
 isPlayMode = false;
 
@@ -104,7 +107,7 @@ onTrackDomready = (track) => {
  * Playlistジャケットクリック時のハンドラー
  *   選択中PlaylistをクリックされたPlaylistに切り替える
  */
-onClickJacket = (playlist) => {
+onClickPlaylistJacket = (playlist) => {
   if (selectedPlaylist === playlist) {
     return;
   }
@@ -113,6 +116,21 @@ onClickJacket = (playlist) => {
   }
   selectedPlaylist = playlist;
   selectedPlaylist.openDetail();
+};
+
+/**
+ * Trackジャケットクリック時のハンドラー
+ *   選択中TrackをクリックされたTrackに切り替える
+ */
+onClickTrackJacket = (track) => {
+  if (selectedTrack === track) {
+    return;
+  }
+  if (selectedTrack) {
+    selectedTrack.closeDetail();
+  }
+  selectedTrack = track;
+  selectedTrack.openDetail();
 };
 
 /**
@@ -142,10 +160,17 @@ onApplyData = (event, data) => {
     var playlist;
     playlist = new Playlist(_data);
     playlist.addListener('domready', onPlaylistDomready.bind(null, playlist));
-    playlist.addListnerToJacket('click', onClickJacket.bind(null, playlist));
+    playlist.addListnerToJacket(
+      'click',
+      onClickPlaylistJacket.bind(null, playlist)
+    );
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     for (let track of playlist.tracks) {
       track.addListener('domready', onTrackDomready.bind(null, track));
+      track.addListnerToJacket(
+        'click',
+        onClickTrackJacket.bind(null, track)
+      );
     }
     playlist.open(map);
     playlists.push(playlist);
