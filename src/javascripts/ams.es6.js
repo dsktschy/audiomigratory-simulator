@@ -32,12 +32,12 @@ const
 var
   init, jqueryMap, setJqueryMap, map, marker, playlists, getCurrPos, amsData,
   onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker, onApplyData,
-  onClickMap, onDomready, onClickJacket, onClickNoteIcon;
+  onClickMap, onDomready, onClickJacket, onClickNoteIcon, selectedPlaylist;
 
-/**
- * プレイリスト配列
- */
+/** プレイリスト配列 */
 playlists = [];
+/** 選択中のプレイリスト */
+selectedPlaylist = null;
 
 /**
  * jqueryオブジェクトを保持
@@ -92,9 +92,17 @@ onDomready = (playlist) => {
 
 /**
  * Playlistジャケットクリック時のハンドラー
+ *   選択中PlaylistをクリックされたPlaylistに切り替える
  */
-onClickJacket = () => {
-
+onClickJacket = (playlist) => {
+  if (selectedPlaylist === playlist) {
+    return;
+  }
+  if (selectedPlaylist) {
+    selectedPlaylist.closeDetail();
+  }
+  selectedPlaylist = playlist;
+  selectedPlaylist.openDetail();
 };
 
 /**
@@ -116,7 +124,7 @@ onApplyData = (event, data) => {
     var playlist;
     playlist = new Playlist(_data);
     playlist.addListener('domready', onDomready.bind(null, playlist));
-    playlist.addListnerToJacket('click', onClickJacket);
+    playlist.addListnerToJacket('click', onClickJacket.bind(null, playlist));
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     playlist.open(map);
     playlists.push(playlist);

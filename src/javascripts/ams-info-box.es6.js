@@ -35,7 +35,11 @@ const
     'latlng',
     'lat',
     'lng',
-  ];
+  ],
+  /** detailMode時のz-index */
+  OPEN_Z_INDEX = 100,
+  /** detailModeでない時のz-index */
+  CLOSED_Z_INDEX = 'auto';
 
 var AMSInfoBox;
 
@@ -101,6 +105,7 @@ AMSInfoBox = class extends InfoBox {
       boxStyle: {width: `${width}px`},
       pixelOffset: new GM.Size(-(width / 2), 0),
     });
+    this.setZIndex(OPEN_Z_INDEX);
   }
   /**
    * detailMode解除
@@ -114,6 +119,7 @@ AMSInfoBox = class extends InfoBox {
     this.setOptions({
       pixelOffset: new GM.Size(-(DETAIL_CLOSED_WIDTH / 2), 0),
     });
+    this.setZIndex(CLOSED_Z_INDEX);
   }
   /**
    * infoBoxのwidthがautoでは内容量と合致しない場合があるため矯正する
