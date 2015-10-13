@@ -2,8 +2,18 @@ import google from 'google';
 import AMSInfoBox from './ams-info-box';
 
 const
+  /** モジュール名 */
+  MOD_NAME = 'ams-track',
   /** ショートカット */
   GM = google.maps,
+  /** ジャケット,音符アイコンの一辺(px) */
+  ICON_SIZE = AMSInfoBox.ICON_SIZE,
+  /** img要素のサイズ属性部分 */
+  IMG_SIZE_ATTR = `width=${ICON_SIZE} height=${ICON_SIZE}`,
+  /** タイトル要素のクラス名 */
+  TITLE_CLASS = 'title',
+  /** ユーザー名要素のクラス名 */
+  USER_NAME_CLASS = 'user-name',
   /** 円の透明度 */
   CIRCLE_FILL_OPACITY = 0.35,
   /** GM.Circleコンストラクターに渡すオプション */
@@ -35,14 +45,19 @@ Track = class extends AMSInfoBox {
    * @param {string} defaultJacket ジャケットが存在しない場合に使用する画像
    */
   constructor(data, defaultJacket) {
-    var detail, circleOptMaps, position, hsl;
-    data.img = data.jacket || data.user_img || defaultJacket;
-    detail = '' +
-      '<p>' +
-        `<span class="bold">${data.title}</span><br>` +
-        `<span class="gray">${data.user_name}</span>` +
-      '</p>';
-    super(data, detail);
+    var img, content, circleOptMaps, position, hsl;
+    img = data.jacket || data.user_img || defaultJacket;
+    content = '' +
+      `<div class="${MOD_NAME}">` +
+        '<p>' +
+          `<img src=${img} ${IMG_SIZE_ATTR}>` +
+        '</p>' +
+        '<p>' +
+          `<span class="${TITLE_CLASS}">${data.title}</span><br>` +
+          `<span class="${USER_NAME_CLASS}">${data.user_name}</span>` +
+        '</p>' +
+      '</div>';
+    super(data, content);
     circleOptMaps = [
       Object.create(CIRCLE_OPT_MAP),
       Object.create(CIRCLE_OPT_MAP),

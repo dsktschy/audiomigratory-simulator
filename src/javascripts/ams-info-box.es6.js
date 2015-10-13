@@ -3,10 +3,10 @@ import google from 'google';
 import InfoBox from 'infobox';
 
 const
+  /** モジュール名 */
+  MOD_NAME = 'ams-info-box',
   /** ショートカット */
   GM = google.maps,
-  /** contentプロパティの要素のクラス */
-  CONTENT_ELEM_CLASS = 'info-box',
   /** ジャケット,音符アイコンの一辺(px) */
   ICON_SIZE = 48,
   /** InfoBoxの一辺(px) */
@@ -62,18 +62,12 @@ AMSInfoBox = class extends InfoBox {
   /**
    * constructor
    */
-  constructor(data, detail = '') {
+  constructor(data, content = '') {
     var lat, lng;
     lat = parseFloat(data.lat);
     lng = parseFloat(data.lng);
     INFO_BOX_OPT_MAP.position = new GM.LatLng(lat, lng);
-    INFO_BOX_OPT_MAP.content = '' +
-      `<div class="${CONTENT_ELEM_CLASS}">` +
-        '<p>' +
-          `<img src=${data.img} width=${ICON_SIZE} height=${ICON_SIZE}>` +
-        '</p>' +
-        detail +
-      '</div>';
+    INFO_BOX_OPT_MAP.content = $(content).addClass(MOD_NAME)[0];
     super(INFO_BOX_OPT_MAP);
     for (let key in data) {
       if (!data.hasOwnProperty(key) || EXCLUDED_KEYS.indexOf(key) !== -1) {

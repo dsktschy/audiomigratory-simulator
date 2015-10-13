@@ -1,6 +1,5 @@
-.info-box {
+.ams-info-box {
   $white: #fff;
-  $gray: #888;
   $shadowColor: rgba(0, 0, 0, .6);
   position: relative;
   margin: 0 0 7px 0;
@@ -33,14 +32,6 @@
   p {
     float: left;
     white-space: nowrap;
-
-    .bold {
-      font-weight: bold;
-    }
-
-    .gray {
-      color: $gray;
-    }
 
     &:not(:first-child) {
       margin: 0 0 0 5px;
