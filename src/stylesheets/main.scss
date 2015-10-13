@@ -12,9 +12,16 @@ body {
 }
 
 html {
+  // 幅360px未満
   font-size: 31.2%;
-}
 
-body {
-  position: relative;
+  // 幅360px以上
+  @media screen and (min-width: 360px) {
+    font-size: 46.8%;
+  }
+
+  // 幅480px以上
+  @media screen and (min-width: 480px) {
+    font-size: 62.5%;
+  }
 }

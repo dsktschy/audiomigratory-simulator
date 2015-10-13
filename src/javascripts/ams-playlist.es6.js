@@ -16,7 +16,9 @@ const
   /** タイトル要素のクラス名 */
   TITLE_CLASS = 'title',
   /** ユーザー名要素のクラス名 */
-  USER_NAME_CLASS = 'user-name';
+  USER_NAME_CLASS = 'user-name',
+  /** プレイモード時用の要素に適用するクラス名 */
+  PLAY_MODE_CLASS = 'play-mode';
 
 var Playlist;
 
@@ -29,6 +31,8 @@ Playlist = class extends AMSInfoBox {
    * constructor
    *   Trackと扱いを揃えるため
    *   latlngプロパティをlat,lngプロパティに分解する
+   *   $playModeContentプロパティは
+   *   append後も参照の必要があるためjQueryオブジェクトとして保持
    * @param {Object} data APIから取得したJSONデータのplaylists[i]
    */
   constructor(data) {
@@ -55,6 +59,12 @@ Playlist = class extends AMSInfoBox {
     for (let _data of data.tracks) {
       this.tracks.push(new Track(_data, img));
     }
+    this.$playModeContent = $(
+      `<div class="${MOD_NAME} ${PLAY_MODE_CLASS}">` +
+        `<p class="${TITLE_CLASS}">${this.title}</p>` +
+        `<p class="${USER_NAME_CLASS}">${this.user_name}</p>` +
+      '</div>'
+    );
   }
   /**
    * 音符アイコンにイベントハンドラーを設定
@@ -64,6 +74,24 @@ Playlist = class extends AMSInfoBox {
     $content = $(this.getContent());
     $content.children(':last').on(eventname, handler);
     this.setContent($content[0]);
+  }
+  /**
+   * プレイモード時用の要素を設定
+   */
+  appendPlayModeContentTo($wrapper) {
+    $wrapper.append(this.$playModeContent);
+  }
+  /**
+   * プレイモード時用の要素を表示
+   */
+  openPlayModeContent() {
+    this.$playModeContent.css('display', 'block');
+  }
+  /**
+   * プレイモード時用の要素を非表示に
+   */
+  closePlayModeContent() {
+    this.$playModeContent.css('display', 'none');
   }
 };
 

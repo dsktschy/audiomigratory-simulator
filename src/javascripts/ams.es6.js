@@ -7,7 +7,6 @@ import AMSMap from './ams-map';
 import AMSMarker from './ams-marker';
 import Playlist from './ams-playlist';
 import amsIcons from './ams-icons';
-import amsInfo from './ams-info';
 
 const
   /** モジュール名 */
@@ -144,6 +143,7 @@ onClickNoteIcon = () => {
       circle.setVisible(true);
     }
   }
+  selectedPlaylist.openPlayModeContent();
   isPlayMode = true;
   return false;
 };
@@ -165,6 +165,7 @@ onClickMarker = () => {
   for (let playlist of playlists) {
     playlist.setVisible(true);
   }
+  selectedPlaylist.closePlayModeContent();
   isPlayMode = false;
   return false;
 };
@@ -187,6 +188,8 @@ onApplyData = (event, data) => {
     );
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     playlist.open(map);
+    playlist.appendPlayModeContentTo(jqueryMap[`$${MOD_NAME}`]);
+    playlist.closePlayModeContent();
     for (let track of playlist.tracks) {
       track.addListener('domready', onTrackDomready.bind(null, track));
       track.addListnerToJacket(
@@ -223,7 +226,6 @@ init = ($wrapper) => {
   amsData.init();
   amsModel.init(amsData);
   amsIcons.init(jqueryMap[`$${MOD_NAME}`]);
-  amsInfo.init(jqueryMap[`$${MOD_NAME}`]);
   map = new AMSMap(jqueryMap[`$${MOD_NAME}`]);
   marker = new AMSMarker(map);
   marker.setVisible(false);
