@@ -166,6 +166,10 @@ onClickMarker = () => {
     playlist.setVisible(true);
   }
   selectedPlaylist.closePlayModeContent();
+  if (selectedTrack) {
+    selectedTrack.closeDetail();
+    selectedTrack = null;
+  }
   isPlayMode = false;
   return false;
 };
