@@ -15,6 +15,8 @@ const
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`,
   /** ショートカット */
   GM = google.maps,
+  /** ショートカット */
+  GET_DISTANCE_BETWEEN = GM.geometry.spherical.computeDistanceBetween,
   /** 現在地取得時のタイムアウト時間(msec) */
   CURRENT_POS_TIMEOUT = 10000,
   /** 現在地情報のキャッシュ有効時間 */
@@ -57,7 +59,15 @@ setJqueryMap = () => {
  * mapクリックイベントのハンドラー
  */
 onClickMap = (event) => {
+  var distance;
   marker.setPosition(event.latLng);
+  if (!isPlayMode) {
+    return;
+  }
+  for (let track of selectedPlaylist.tracks) {
+    distance = GET_DISTANCE_BETWEEN(marker.getPosition(), track.getPosition());
+    track.apply(distance);
+  }
 };
 
 /**
@@ -134,6 +144,7 @@ onClickTrackJacket = (track) => {
  *   再生モードに切り替える
  */
 onClickNoteIcon = () => {
+  var distance;
   for (let playlist of playlists) {
     playlist.setVisible(false);
   }
@@ -142,6 +153,8 @@ onClickNoteIcon = () => {
     for (let circle of track.circles) {
       circle.setVisible(true);
     }
+    distance = GET_DISTANCE_BETWEEN(marker.getPosition(), track.getPosition());
+    track.apply(distance);
   }
   selectedPlaylist.openPlayModeContent();
   isPlayMode = true;
@@ -161,6 +174,7 @@ onClickMarker = () => {
     for (let circle of track.circles) {
       circle.setVisible(false);
     }
+    track.apply(null);
   }
   for (let playlist of playlists) {
     playlist.setVisible(true);
