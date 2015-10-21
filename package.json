@@ -53,7 +53,6 @@
     "taffydb": "global:TAFFY",
     "socketio": "global:io",
     "google": "global:google",
-    "infobox": "global:InfoBox",
-    "soundcloud": "global:SC"
+    "infobox": "global:InfoBox"
   }
 }

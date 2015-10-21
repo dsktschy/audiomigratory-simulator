@@ -1,6 +1,6 @@
 import google from 'google';
 import AMSInfoBox from './ams-info-box';
-import SC from 'soundcloud';
+import createAudio from './ams-audio';
 
 const
   /** モジュール名 */
@@ -31,56 +31,9 @@ const
   /** 外側の円のインデックス */
   OUTER = 0,
   /** 内側の円のインデックス */
-  INNER = 1,
-  /** SoundCloudAPI利用のためのID */
-  SC_CLIENT_ID = 'b554814828423314a4070bd344e87b5a',
-  /** フェード間隔(ms) */
-  FADE_INTERVAL = 50,
-  /** フェード所要時間(ms) */
-  FADE_DURATION = 1000,
-  /** 所要時間で完了するためのフェード処理実行回数 */
-  FADE_COUNT = FADE_DURATION / FADE_INTERVAL;
+  INNER = 1;
 
-var Track, fadeTo;
-
-// SC初期化
-SC.initialize({client_id: SC_CLIENT_ID});
-
-/**
- * SCのPlayerクラスに追加するフェードメソッド
- */
-fadeTo = function(targetVol, callback) {
-  var currentVol, volPerInterval;
-  clearInterval(this.intervalID);
-  this.intervalID = null;
-  currentVol = this.getVolume();
-  if (currentVol === targetVol) {
-    return;
-  }
-  if (targetVol && !currentVol) {
-    this.play();
-  }
-  volPerInterval = -((currentVol - targetVol) / FADE_COUNT);
-  this.intervalID = setInterval(() => {
-    var isBelowMin, isAboveMax;
-    currentVol += volPerInterval;
-    isBelowMin = (volPerInterval < 0 && currentVol < targetVol);
-    isAboveMax = (volPerInterval > 0 && currentVol > targetVol);
-    if (isBelowMin || isAboveMax) {
-      currentVol = targetVol;
-    }
-    this.setVolume(currentVol);
-    if (currentVol !== targetVol) {
-      return;
-    }
-    if (!currentVol) {
-      this.stop();
-    }
-    clearInterval(this.intervalID);
-    this.intervalID = null;
-    callback();
-  }, FADE_INTERVAL);
-};
+var Track;
 
 /**
  * トラッククラス
@@ -122,32 +75,20 @@ Track = class extends AMSInfoBox {
       new GM.Circle(circleOptMaps[OUTER]),
       new GM.Circle(circleOptMaps[INNER]),
     ];
-    SC.stream(`/tracks/${this.id}`, (player) => {
-      var playerProto;
-      playerProto = Object.getPrototypeOf(player);
-      if (playerProto.fadeTo !== fadeTo) {
-        playerProto.fadeTo = fadeTo;
-      }
-      this.player = player;
-      this.player.setVolume(0);
-      this.player.intervalID = null;
-    });
+    this.audio = createAudio(this.id);
   }
   /**
    * 与えられた距離を音量に反映する
    */
   apply(distance) {
     var vol;
-    if (!this.player) {
-      return;
-    }
     vol = distance === null || distance >= this.rad
       ? 0
       : distance <= this.rad2
         ? 1
         : 1 - (distance - this.rad2) / (this.rad - this.rad2);
-    this.player.fadeTo(vol, () => {
-      console.log(this.title, this.player.getVolume());
+    this.audio.fadeTo(vol, () => {
+      console.log(this.title, this.audio.volume);
     });
   }
 };
