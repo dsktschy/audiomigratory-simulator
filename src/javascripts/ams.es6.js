@@ -104,9 +104,7 @@ onPlaylistDomready = (playlist) => {
 onTrackDomready = (track) => {
   track.closeDetail();
   track.setVisible(false);
-  for (let circle of track.circles) {
-    circle.setVisible(false);
-  }
+  track.circle.setVisible(false);
 };
 
 /**
@@ -150,9 +148,7 @@ onClickNoteIcon = () => {
   }
   for (let track of selectedPlaylist.tracks) {
     track.setVisible(true);
-    for (let circle of track.circles) {
-      circle.setVisible(true);
-    }
+    track.circle.setVisible(true);
     distance = GET_DISTANCE_BETWEEN(marker.getPosition(), track.getPosition());
     track.apply(distance);
   }
@@ -171,9 +167,7 @@ onClickMarker = () => {
   }
   for (let track of selectedPlaylist.tracks) {
     track.setVisible(false);
-    for (let circle of track.circles) {
-      circle.setVisible(false);
-    }
+    track.circle.setVisible(false);
     track.apply(null);
   }
   for (let playlist of playlists) {
@@ -215,9 +209,7 @@ onApplyData = (event, data) => {
         onClickTrackJacket.bind(null, track)
       );
       track.open(map);
-      for (let circle of track.circles) {
-        circle.setMap(map);
-      }
+      track.circle.open(map);
     }
     playlists.push(playlist);
   }
