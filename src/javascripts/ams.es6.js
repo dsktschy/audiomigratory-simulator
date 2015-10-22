@@ -31,8 +31,8 @@ const
   IS_FAKE = true;
 
 var
-  init, jqueryMap, setJqueryMap, map, marker, playlists, getCurrPos, amsData,
-  onSuccessToGetCurrPos, onErrorToGetCurrPos, onClickMarker, onApplyData,
+  init, jqueryMap, setJqueryMap, map, marker, playlists, getPosition, amsData,
+  onSuccessToGetPosition, onErrorToGetPosition, onClickMarker, onApplyData,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode,
   onTrackDomready;
@@ -73,7 +73,7 @@ onClickMap = (event) => {
 /**
  * 現在地取得成功時のコールバック
  */
-onSuccessToGetCurrPos = ({coords: {latitude, longitude}}) => {
+onSuccessToGetPosition = ({coords: {latitude, longitude}}) => {
   var latLng;
   latLng = new GM.LatLng(latitude, longitude);
   map.setCenter(latLng);
@@ -85,7 +85,7 @@ onSuccessToGetCurrPos = ({coords: {latitude, longitude}}) => {
 /**
  * 現在地取得失敗時のコールバック
  */
-onErrorToGetCurrPos = (e) => {
+onErrorToGetPosition = (e) => {
   marker.setVisible(true);
   amsModel.applyData(map.getCenter().lat(), map.getCenter().lng());
   console.log(e);
@@ -216,13 +216,27 @@ onApplyData = (event, data) => {
 };
 
 /**
- * 現在地を取得してコールバックに渡す
+ * 位置情報を取得してコールバックに渡す
+ *   iframeからリクエストされている場合はiframeの属性から取得
+ *   属性が不正または直接リクエストされた場合は現在地を取得
+ *   現在地が取得できない場合はデフォルトの位置情報を使用
  */
-getCurrPos = (onSuccess, onError, optMap) => {
+getPosition = (onSuccess, onError) => {
+  var $iframe, latitude, longitude;
+  $iframe = $('#ams-iframe', parent.document);
+  if ($iframe.length) {
+    latitude = parseFloat($iframe.data('lat'));
+    longitude = parseFloat($iframe.data('lng'));
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+      onSuccess({coords: {latitude, longitude}});
+      return;
+    }
+  }
   if (!navigator.geolocation) {
+    onError('Geolocation is not supported by this browser.');
     return;
   }
-  navigator.geolocation.getCurrentPosition(onSuccess, onError, optMap);
+  navigator.geolocation.getCurrentPosition(onSuccess, onError, POS_OPT_MAP);
 };
 
 /**
@@ -242,7 +256,7 @@ init = ($wrapper) => {
   map.addListener('click', onClickMap);
   marker.addListener('click', onClickMarker);
   $(window).on('apply-data', onApplyData);
-  getCurrPos(onSuccessToGetCurrPos, onErrorToGetCurrPos, POS_OPT_MAP);
+  getPosition(onSuccessToGetPosition, onErrorToGetPosition);
 };
 
 export default {
