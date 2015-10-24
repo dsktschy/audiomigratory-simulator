@@ -1,8 +1,17 @@
 import $ from 'jquery';
 
 var
-  init, applyData, amsData, onSuccessToGetParsedData,
-  onErrorToGetParsedData;
+  init, applyData, amsData, onSuccessToGetParsedData, onErrorToGetParsedData,
+  setJqueryMap, jqueryMap;
+
+/**
+ * jqueryオブジェクトを保持
+ */
+setJqueryMap = () => {
+  jqueryMap = {
+    $window: $(window),
+  };
+};
 
 /**
  * データ取得成功時のコールバック
@@ -12,7 +21,7 @@ onSuccessToGetParsedData = (data) => {
     console.log('json.status: 0');
     return;
   }
-  $(window).trigger('apply-data', data.result);
+  jqueryMap.$window.trigger('apply-data', data.result);
 };
 
 /**
@@ -39,6 +48,7 @@ applyData = (lat, lng) => {
  * @exports
  */
 init = (dataMod) => {
+  setJqueryMap();
   amsData = dataMod;
 };
 

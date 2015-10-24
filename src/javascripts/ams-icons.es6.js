@@ -49,7 +49,7 @@ for (let [k, v] of ICON_MAP_) {
  */
 setJqueryMap = () => {
   jqueryMap = {
-    [`$${MOD_NAME}`]: $(`#${MOD_NAME}`),
+    $self: $(`#${MOD_NAME}`),
   };
 };
 
@@ -61,7 +61,7 @@ init = ($wrapper) => {
   $wrapper.append(HTML);
   setJqueryMap();
   for (let [k, v] of ICON_MAP_) {
-    jqueryMap[`$${MOD_NAME}`].append(v.html);
+    jqueryMap.$self.append(v.html);
   }
 };
 

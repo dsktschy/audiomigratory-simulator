@@ -51,7 +51,8 @@ isPlayMode = false;
  */
 setJqueryMap = () => {
   jqueryMap = {
-    [`$${MOD_NAME}`]: $(`#${MOD_NAME}`),
+    $self: $(`#${MOD_NAME}`),
+    $window: $(window),
   };
 };
 
@@ -200,7 +201,7 @@ onApplyData = (event, data) => {
     );
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     playlist.open(map);
-    playlist.appendPlayModeContentTo(jqueryMap[`$${MOD_NAME}`]);
+    playlist.appendPlayModeContentTo(jqueryMap.$self);
     playlist.closePlayModeContent();
     for (let track of playlist.tracks) {
       track.addListener('domready', onTrackDomready.bind(null, track));
@@ -249,13 +250,13 @@ init = ($wrapper) => {
   amsData = IS_FAKE ? _amsDataFake : _amsData;
   amsData.init();
   amsModel.init(amsData);
-  amsIcons.init(jqueryMap[`$${MOD_NAME}`]);
-  map = new AMSMap(jqueryMap[`$${MOD_NAME}`]);
+  amsIcons.init(jqueryMap.$self);
+  map = new AMSMap(jqueryMap.$self);
   marker = new AMSMarker(map);
   marker.setVisible(false);
   map.addListener('click', onClickMap);
   marker.addListener('click', onClickMarker);
-  $(window).on('apply-data', onApplyData);
+  jqueryMap.$window.on('apply-data', onApplyData);
   getPosition(onSuccessToGetPosition, onErrorToGetPosition);
 };
 
