@@ -2,5 +2,4 @@
 node_modules
 gulpfile.js
 public/maps
-public/javascripts/fake-data.js
 public/iframe.html
