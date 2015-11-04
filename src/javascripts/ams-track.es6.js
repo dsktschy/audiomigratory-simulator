@@ -1,3 +1,4 @@
+import google from 'google';
 import AMSInfoBox from './ams-info-box';
 import AMSCircle from './ams-circle';
 import createAudio from './ams-audio';
@@ -5,6 +6,8 @@ import createAudio from './ams-audio';
 const
   /** モジュール名 */
   MOD_NAME = 'ams-track',
+  /** ショートカット */
+  GM = google.maps,
   /** ジャケット,音符アイコンの一辺(px) */
   ICON_SIZE = AMSInfoBox.ICON_SIZE,
   /** img要素のサイズ属性部分 */
@@ -16,7 +19,10 @@ const
   /** 外側の円に対する内側の円の倍率 */
   DEFAULT_RAD2_RATIO = 0.1;
 
-var Track;
+var Track, getDistanceBetween;
+
+/** ショートカット */
+getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
 
 /**
  * トラッククラス
@@ -48,15 +54,18 @@ Track = class extends AMSInfoBox {
     this.audio = createAudio(this.id);
   }
   /**
-   * 与えられた距離を音量に反映する
+   * 与えられた位置との距離を音量に反映する
    */
-  apply(distance) {
-    var vol;
-    vol = distance === null || distance >= this.rad
-      ? 0
-      : distance <= this.rad2
-        ? 1
-        : 1 - (distance - this.rad2) / (this.rad - this.rad2);
+  applyPosition(pos) {
+    var distance, vol;
+    if (pos === null) {
+      vol = 0;
+    } else {
+      distance = getDistanceBetween(pos, this.getPosition());
+      vol = distance >= this.rad
+        ? 0 : distance <= this.rad2
+          ? 1 : 1 - (distance - this.rad2) / (this.rad - this.rad2);
+    }
     this.audio.fadeTo(vol, () => {
       console.log(this.title, this.audio.volume);
     });
