@@ -1,0 +1,141 @@
+FAKE_DATA = {
+  "msg": "Success",
+  "status": 1,
+  "result": {
+    "hits": "2",
+    "playlists": [
+      {
+        "vehicle": "",
+        "since": "2012/04/23 13:16:46 +0000",
+        "tagstr": "",
+        "latlng": "35.04557474932641,139.8323751056007",
+        "user_name": "Ryu Furusawa",
+        "addresstr": "Japan,Chiba-ken:Japan,Minamibōsō-shi:Chiba-ken:Japan",
+        "genrestr": "audiomigratory",
+        "user_img": "https://i1.sndcdn.com/avatars-000005739175-rq2r7k-large.jpg",
+        "line": "原岡海岸",
+        "jacket": "",
+        "id": "1901412",
+        "title": "ryufurusawa1",
+        "desc": "35.668105,139.626793,800;\r\n35.666798,139.636156,500;\r\n35.669151,139.604824,700;\r\n\r\n",
+        "user_url": "http://soundcloud.com/ryufurusawa",
+        "tracks": [
+          {
+            "id": "43201329",
+            "title": "silent scene",
+            "user_name": "Ryu Furusawa",
+            "user_img": "https://i1.sndcdn.com/avatars-000005739175-rq2r7k-large.jpg",
+            "user_url": "http://soundcloud.com/ryufurusawa",
+            "jacket": "https://i1.sndcdn.com/artworks-000021685954-dr2nqk-large.jpg",
+            "desc": "35.669151,139.604824,700,\r\nsho played by Michi Futakami\r\n",
+            "duration": "735730",
+            "genrestr": "",
+            "tagstr": "",
+            "lat": "35.04377116584314",
+            "lng": "139.8315024936012",
+            "rad": "173.70957593890154",
+            "rad2": ""
+          },
+          {
+            "tagstr": "",
+            "lng": "139.83304744599377",
+            "user_name": "Ryu Furusawa",
+            "user_img": "https://i1.sndcdn.com/avatars-000005739175-rq2r7k-large.jpg",
+            "genrestr": "",
+            "rad": "138.51340625041854",
+            "jacket": "https://i1.sndcdn.com/artworks-000022132003-6v39hy-large.jpg",
+            "id": "44072810",
+            "title": "nobody knows",
+            "desc": "35.668105,139.626793,800,\r\nnobody knows \r\n2007\r\nfl : Tomomi masui\r\npiano,musical saw :ryu furusawa\r\n",
+            "duration": "553221",
+            "rad2": "",
+            "user_url": "http://soundcloud.com/ryufurusawa",
+            "lat": "35.04728462797384"
+          },
+          {
+            "id": "43997063",
+            "title": "light scene",
+            "user_name": "Ryu Furusawa",
+            "user_img": "https://i1.sndcdn.com/avatars-000005739175-rq2r7k-large.jpg",
+            "user_url": "http://soundcloud.com/ryufurusawa",
+            "jacket": "https://i1.sndcdn.com/artworks-000022132780-g963jm-large.jpg",
+            "desc": "35.666798,139.636156,500",
+            "duration": "1290078",
+            "genrestr": "",
+            "tagstr": "",
+            "lat": "35.04566845416227",
+            "lng": "139.83257537720715",
+            "rad": "95.52002917946635",
+            "rad2": ""
+          }
+        ]
+      },
+      {
+        "id": "66358819",
+        "title": "Test",
+        "jacket": "",
+        "desc": "",
+        "genrestr": "",
+        "tagstr": "",
+        "since": "2014/12/23 08:41:43 +0000",
+        "user_name": "Ryu Furusawa",
+        "user_img": "https://i1.sndcdn.com/avatars-000005739175-rq2r7k-large.jpg",
+        "user_url": "http://soundcloud.com/ryufurusawa",
+        "line": "原岡海岸",
+        "vehicle": "",
+        "addresstr": "Japan,Chiba-ken:Japan,Minamibōsō-shi:Chiba-ken:Japan",
+        "latlng": "35.04661312642613,139.8311053223775",
+        "tracks": [
+          {
+            "tagstr": "",
+            "lng": "139.82983352519733",
+            "user_name": "BluntGutsNation",
+            "user_img": "https://i1.sndcdn.com/avatars-000128329089-nmy15s-large.jpg",
+            "genrestr": "BluntGutsNation",
+            "rad": "600",
+            "jacket": "https://i1.sndcdn.com/artworks-000096025319-nc41mj-large.jpg",
+            "id": "76722159",
+            "title": "HYDRABADD - El8tion",
+            "desc": "http://www.bluntgutsnation.com/2013/01/hydrabaddel8tion-forthcoming-eat-more.html\r\n\r\nhttps://soundcloud.com/HYDRABADD - El8tion\r\n\r\nhttp://www.facebook.com/Hydrabadd?fref=ts\r\n\r\n(Forthcoming Eat More Blunt Guts Vol. 2)\r\n\r\n(Vol. 1) http://bluntgutsnation.bandcamp.com/album/eat-more-blunt-guts\r\n\r\n",
+            "duration": "213518",
+            "rad2": "",
+            "user_url": "http://soundcloud.com/bluntgutsnation",
+            "lat": "35.049292389571574"
+          },
+          {
+            "tagstr": "Ambient \"Thula Borah\" \"Executioner's song\" FatCat \"FatCat Records\" \"FatCat Records demo\" Demo \"Demos 2014\" 2014",
+            "lng": "139.83083352519733",
+            "user_name": "FatCat Records Demo",
+            "user_img": "https://i1.sndcdn.com/avatars-000002698293-hdxrso-large.jpg",
+            "genrestr": "Alternative Rock",
+            "rad": "600",
+            "jacket": "https://i1.sndcdn.com/artworks-000096308384-q3ydm9-large.jpg",
+            "id": "175634853",
+            "title": "Thula Borah - Executioner's Song",
+            "desc": "Thula Borah are Lloyd James Fay (guitar + vocals), Matthew Williams (bass + vocals), Kevin Heimann (guitar) and Michael O’Rourke (drums). \n\nThe four-piece band from Glasgow draw inflouences from the likes of 90s guitar bands such as Smashing Pumpkins, Nirvana, REM and Radiohead along with the dynamics and ambience of Mogwai, Sigur Ros and Isis to create their haunting downbeat melodies. \n\nThe band started as Matt and Lloyd jamming with a drum machine before becoming a fully-fledged band as of late 2009. They have since been gigging extensively, playing venues such as King Tut’s Wah Wah Hut, Nice N Sleazy, The Classic Grand and Oran Mor in Glasgow as well as the Edinburgh Festival and various venues up and down Scotland as part of a 2013 Scottish tour. \n\nThula Borah have received airplay in as diverse places as BBC Radio One and Four, Radio Scotland, Radio North Angus, Heartland FM, Subcity and Amazing Radio and have also received favorable reviews in the Daily Record. They also recently reached the final of the Billy Kelly Songwriting competition.\n\n\"...batters slabs of noise into your bones....epic.\" -Rick Fulton, Daily Record \n\n“...haunting, hypnotic, exotic and feel-good atmosphere...a band that's seriously promising and deserves to be heard by many.” - Dead Earnest \n\n“Slow-burning rock beauty.” - Amazing Radio’s Charlie Ashcroft \n\nFor more from the band visit:\n\nhttp://thulaborah.com\nhttps://www.facebook.com/ThulaBorahMusic \nhttps://twitter.com/ThulaBorah\n",
+            "duration": "397385",
+            "rad2": "",
+            "user_url": "http://soundcloud.com/fatcat-demo",
+            "lat": "35.047292389571574"
+          },
+          {
+            "id": "177418092",
+            "title": "Every Single Thing Thats Yours",
+            "user_name": "CallowDrxms",
+            "user_img": "https://i1.sndcdn.com/avatars-000134217793-3dy8pt-large.jpg",
+            "user_url": "http://soundcloud.com/callowdrxms",
+            "jacket": "https://i1.sndcdn.com/artworks-000097490945-z3w4v0-large.jpg",
+            "desc": " All me",
+            "duration": "154685",
+            "genrestr": "TRIP HOP",
+            "tagstr": "Beat \"callow drxms\" \"callow drums\" 2014",
+            "lat": "35.045254600135245",
+            "lng": "139.83164891673786",
+            "rad": "600",
+            "rad2": ""
+          }
+        ]
+      }
+    ]
+  }
+};
