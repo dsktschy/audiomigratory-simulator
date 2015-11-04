@@ -3,9 +3,9 @@ import google from 'google';
 import _amsData from './ams-data';
 import _amsDataFake from './ams-data-fake';
 import amsModel from './ams-model';
-import AMSMap from './ams-map';
-import AMSMarker from './ams-marker';
-import AMSPlaylist from './ams-playlist';
+import AMSMap from './classes/ams-map';
+import AMSMarker from './classes/ams-marker';
+import AMSPlaylist from './classes/ams-playlist';
 import amsIcons from './ams-icons';
 
 const
