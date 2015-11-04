@@ -31,7 +31,7 @@ const
   IS_FAKE = true;
 
 var
-  init, jqueryMap, setJqueryMap, map, marker, playlists, getPosition, amsData,
+  init, $cache, set$cache, map, marker, playlists, getPosition, amsData,
   onSuccessToGetPosition, onErrorToGetPosition, onClickMarker, onApplyData,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode,
@@ -49,10 +49,10 @@ isPlayMode = false;
 /**
  * jqueryオブジェクトを保持
  */
-setJqueryMap = () => {
-  jqueryMap = {
-    $self: $(`#${MOD_NAME}`),
-    $window: $(window),
+set$cache = () => {
+  $cache = {
+    self: $(`#${MOD_NAME}`),
+    window: $(window),
   };
 };
 
@@ -201,7 +201,7 @@ onApplyData = (event, data) => {
     );
     playlist.addListnerToNoteIcon('click', onClickNoteIcon);
     playlist.open(map);
-    playlist.appendPlayModeContentTo(jqueryMap.$self);
+    playlist.appendPlayModeContentTo($cache.self);
     playlist.closePlayModeContent();
     for (let track of playlist.tracks) {
       track.addListener('domready', onTrackDomready.bind(null, track));
@@ -246,17 +246,17 @@ getPosition = (onSuccess, onError) => {
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);
-  setJqueryMap();
+  set$cache();
   amsData = IS_FAKE ? _amsDataFake : _amsData;
   amsData.init();
   amsModel.init(amsData);
-  amsIcons.init(jqueryMap.$self);
-  map = new AMSMap(jqueryMap.$self);
+  amsIcons.init($cache.self);
+  map = new AMSMap($cache.self);
   marker = new AMSMarker(map);
   marker.setVisible(false);
   map.addListener('click', onClickMap);
   marker.addListener('click', onClickMarker);
-  jqueryMap.$window.on('apply-data', onApplyData);
+  $cache.window.on('apply-data', onApplyData);
   getPosition(onSuccessToGetPosition, onErrorToGetPosition);
 };
 

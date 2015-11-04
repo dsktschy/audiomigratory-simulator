@@ -33,7 +33,7 @@ const
   /** HTML */
   HTML = `<div id="${MOD_NAME}" class="${MOD_NAME}"></div>`;
 
-var init, jqueryMap, setJqueryMap;
+var init, $cache, set$cache;
 
 for (let [k, v] of ICON_MAP_) {
   v.html = '' +
@@ -47,9 +47,9 @@ for (let [k, v] of ICON_MAP_) {
 /**
  * jqueryオブジェクトを保持
  */
-setJqueryMap = () => {
-  jqueryMap = {
-    $self: $(`#${MOD_NAME}`),
+set$cache = () => {
+  $cache = {
+    self: $(`#${MOD_NAME}`),
   };
 };
 
@@ -59,9 +59,9 @@ setJqueryMap = () => {
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);
-  setJqueryMap();
+  set$cache();
   for (let [k, v] of ICON_MAP_) {
-    jqueryMap.$self.append(v.html);
+    $cache.self.append(v.html);
   }
 };
 
