@@ -30,7 +30,7 @@ const
 
 var
   init, $cache, set$cache, map, marker, playlists, getPosition, amsData,
-  onSuccessToGetPosition, onErrorToGetPosition, onClickMarker, onApplyData,
+  onSuccessToGetPosition, onErrorToGetPosition, onClickMarker, onGetData,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode,
   onTrackDomready;
@@ -76,7 +76,7 @@ onSuccessToGetPosition = ({coords: {latitude, longitude}}) => {
   map.setCenter(latLng);
   marker.setPosition(latLng);
   marker.setVisible(true);
-  amsModel.applyData(latitude, longitude);
+  amsModel.getData(latitude, longitude);
 };
 
 /**
@@ -84,7 +84,7 @@ onSuccessToGetPosition = ({coords: {latitude, longitude}}) => {
  */
 onErrorToGetPosition = (e) => {
   marker.setVisible(true);
-  amsModel.applyData(map.getCenter().lat(), map.getCenter().lng());
+  amsModel.getData(map.getCenter().lat(), map.getCenter().lng());
   console.log(e);
 };
 
@@ -180,7 +180,7 @@ onClickMarker = () => {
 /**
  * データ取得完了時のコールバック
  */
-onApplyData = (event, data) => {
+onGetData = (event, data) => {
   if (!parseInt(data.hits, 10)) {
     console.log('json.result.hits: 0');
     return;
@@ -250,7 +250,7 @@ init = ($wrapper) => {
   marker.setVisible(false);
   map.addListener('click', onClickMap);
   marker.addListener('click', onClickMarker);
-  $cache.window.on('apply-data', onApplyData);
+  $cache.window.on('get-data', onGetData);
   getPosition(onSuccessToGetPosition, onErrorToGetPosition);
 };
 

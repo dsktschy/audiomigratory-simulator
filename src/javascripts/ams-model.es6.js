@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 var
-  init, applyData, amsData, onSuccessToGetParsedData, onErrorToGetParsedData,
+  init, getData, amsData, onSuccessToGetParsedData, onErrorToGetParsedData,
   set$cache, $cache;
 
 /**
@@ -21,7 +21,7 @@ onSuccessToGetParsedData = (data) => {
     console.log('json.status: 0');
     return;
   }
-  $cache.window.trigger('apply-data', data.result);
+  $cache.window.trigger('get-data', data.result);
 };
 
 /**
@@ -35,7 +35,7 @@ onErrorToGetParsedData = (e) => {
  * データ取得開始
  * @exports
  */
-applyData = (lat, lng) => {
+getData = (lat, lng) => {
   amsData.getParsedData(
     {lat, lng, zone: 'admin'},
     onSuccessToGetParsedData,
@@ -54,5 +54,5 @@ init = (dataMod) => {
 
 export default {
   init,
-  applyData,
+  getData,
 };
