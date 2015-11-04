@@ -19,7 +19,7 @@ const
   /** 外側の円に対する内側の円の倍率 */
   DEFAULT_RAD2_RATIO = 0.1;
 
-var Track, getDistanceBetween;
+var AMSTrack, getDistanceBetween;
 
 /** ショートカット */
 getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
@@ -28,7 +28,7 @@ getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
  * トラッククラス
  * @exports
  */
-Track = class extends AMSInfoBox {
+AMSTrack = class extends AMSInfoBox {
   /**
    * constructor
    * @param {Object} data APIから取得したJSONデータのplaylists[i].tracks[i]
@@ -72,4 +72,4 @@ Track = class extends AMSInfoBox {
   }
 };
 
-export default Track;
+export default AMSTrack;

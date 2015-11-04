@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import AMSInfoBox from './ams-info-box';
-import Track from './ams-track';
+import AMSTrack from './ams-track';
 
 const
   /** モジュール名 */
@@ -20,16 +20,16 @@ const
   /** プレイモード時用の要素に適用するクラス名 */
   PLAY_MODE_CLASS = 'play-mode';
 
-var Playlist;
+var AMSPlaylist;
 
 /**
  * プレイリストクラス
  * @exports
  */
-Playlist = class extends AMSInfoBox {
+AMSPlaylist = class extends AMSInfoBox {
   /**
    * constructor
-   *   Trackと扱いを揃えるため
+   *   AMSTrackと扱いを揃えるため
    *   latlngプロパティをlat,lngプロパティに分解する
    *   $playModeContentプロパティは
    *   append後も参照の必要があるためjQueryオブジェクトとして保持
@@ -57,7 +57,7 @@ Playlist = class extends AMSInfoBox {
     super(data, content);
     this.tracks = [];
     for (let _data of data.tracks) {
-      this.tracks.push(new Track(_data, img));
+      this.tracks.push(new AMSTrack(_data, img));
     }
     this.$playModeContent = $(
       `<div class="${MOD_NAME} ${PLAY_MODE_CLASS}">` +
@@ -95,4 +95,4 @@ Playlist = class extends AMSInfoBox {
   }
 };
 
-export default Playlist;
+export default AMSPlaylist;

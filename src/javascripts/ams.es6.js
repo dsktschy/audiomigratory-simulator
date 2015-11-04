@@ -5,7 +5,7 @@ import _amsDataFake from './ams-data-fake';
 import amsModel from './ams-model';
 import AMSMap from './ams-map';
 import AMSMarker from './ams-marker';
-import Playlist from './ams-playlist';
+import AMSPlaylist from './ams-playlist';
 import amsIcons from './ams-icons';
 
 const
@@ -187,7 +187,7 @@ onGetData = (event, data) => {
   }
   for (let _data of data.playlists) {
     var playlist;
-    playlist = new Playlist(_data);
+    playlist = new AMSPlaylist(_data);
     playlist.addListener('domready', onPlaylistDomready.bind(null, playlist));
     playlist.addListnerToJacket(
       'click',
