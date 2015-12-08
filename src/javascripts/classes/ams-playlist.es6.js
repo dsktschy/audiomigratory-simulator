@@ -12,7 +12,7 @@ const
   /** ジャケット,音符アイコンの一辺(px) */
   ICON_SIZE = AMSInfoBox.ICON_SIZE,
   /** img要素のサイズ属性部分 */
-  IMG_SIZE_ATTR = `width=${ICON_SIZE} height=${ICON_SIZE}`,
+  IMG_SIZE_ATTR = `width="${ICON_SIZE}" height="${ICON_SIZE}"`,
   /** タイトル要素のクラス名 */
   TITLE_CLASS = 'title',
   /** ユーザー名要素のクラス名 */
@@ -42,7 +42,7 @@ AMSPlaylist = class extends AMSInfoBox {
     content = '' +
       `<div class="${MOD_NAME}">` +
         '<p>' +
-          `<img src=${img} ${IMG_SIZE_ATTR}>` +
+          `<img src="${img}" ${IMG_SIZE_ATTR}>` +
         '</p>' +
         '<p>' +
           `<span class="${TITLE_CLASS}">${data.title}</span><br>` +
