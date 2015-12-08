@@ -33,7 +33,7 @@ rules:
   hex-notation: 2
   indentation: 2
   leading-zero: 2
-  nesting-depth: 2
+  nesting-depth: 0
   property-sort-order: 0
   quotes: 2
   variable-for-property: 2

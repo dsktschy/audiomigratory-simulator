@@ -7,6 +7,8 @@ const
   MOD_NAME = 'ams-playlist',
   /** ジャケットが存在しない場合に使用する画像のindex.htmlからの相対パス */
   DEFAULT_JACKET = '',
+  /** Playlistアイコンのindex.htmlからの相対パス */
+  PLAYLIST_MASK = 'images/playlist-mask.png',
   /** 音符アイコンのindex.htmlからの相対パス */
   NOTE_ICON = 'images/note-icon.gif',
   /** ジャケット,音符アイコンの一辺(px) */
@@ -18,7 +20,9 @@ const
   /** ユーザー名要素のクラス名 */
   USER_NAME_CLASS = 'user-name',
   /** プレイモード時用の要素に適用するクラス名 */
-  PLAY_MODE_CLASS = 'play-mode';
+  PLAY_MODE_CLASS = 'play-mode',
+  /** プレイリストアイコン要素のクラス名 */
+  PLAYLIST_MASK_CLASS = 'playlist-mask';
 
 var AMSPlaylist;
 
@@ -43,6 +47,10 @@ AMSPlaylist = class extends AMSInfoBox {
       `<div class="${MOD_NAME}">` +
         '<p>' +
           `<img src="${img}" ${IMG_SIZE_ATTR}>` +
+          '<img ' +
+            `src="${PLAYLIST_MASK}" ${IMG_SIZE_ATTR} ` +
+            `class="${PLAYLIST_MASK_CLASS}"` +
+          '>' +
         '</p>' +
         '<p>' +
           `<span class="${TITLE_CLASS}">${data.title}</span><br>` +

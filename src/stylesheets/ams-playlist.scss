@@ -4,6 +4,16 @@
 
   &:not(.play-mode) {
 
+    p {
+      position: relative;
+
+      .playlist-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
     .title {
       font-weight: bold;
     }
