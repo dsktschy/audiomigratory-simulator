@@ -18,6 +18,7 @@ var createAudio;
 Audio.prototype.playOnLoad = function() {
   if (!this.readyState) {
     setTimeout(this.playOnLoad.bind(this), RETRY_DELAY);
+    return;
   }
   this.play();
 };
