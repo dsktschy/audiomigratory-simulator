@@ -22,7 +22,19 @@ const
   /** プレイモード時用の要素に適用するクラス名 */
   PLAY_MODE_CLASS = 'play-mode',
   /** プレイリストアイコン要素のクラス名 */
-  PLAYLIST_MASK_CLASS = 'playlist-mask';
+  PLAYLIST_MASK_CLASS = 'playlist-mask',
+  /** プレイモード時のプレイリスト情報要素のクラス名 */
+  INFO_CLASS = 'info',
+  /** プレイモードから抜けるトリガーとなる要素のクラス名 */
+  BACK_CLASS = 'back',
+  /** プレイモードから抜けるトリガーとなる要素の文字列 */
+  BACK_HTML = '<p>< Back<span>to</span><span>playlists</span></p>',
+  /** プレイモードから抜けるトリガーとなる要素 */
+  $PLAY_MODE_CONTENT = $(
+    `<div class="${MOD_NAME} ${BACK_CLASS} ${PLAY_MODE_CLASS}">` +
+      BACK_HTML +
+    '</div>'
+  );
 
 var AMSPlaylist;
 
@@ -68,7 +80,7 @@ AMSPlaylist = class extends AMSInfoBox {
       this.tracks.push(new AMSTrack(_data, img));
     }
     this.$playModeContent = $(
-      `<div class="${MOD_NAME} ${PLAY_MODE_CLASS}">` +
+      `<div class="${MOD_NAME} ${INFO_CLASS} ${PLAY_MODE_CLASS}">` +
         `<p class="${TITLE_CLASS}">${this.title}</p>` +
         `<p class="${USER_NAME_CLASS}">${this.user_name}</p>` +
       '</div>'
@@ -93,13 +105,37 @@ AMSPlaylist = class extends AMSInfoBox {
    * プレイモード時用の要素を表示
    */
   openPlayModeContent() {
-    this.$playModeContent.css('display', 'block');
+    this.$playModeContent.css('visibility', 'visible');
   }
   /**
    * プレイモード時用の要素を非表示に
    */
   closePlayModeContent() {
-    this.$playModeContent.css('display', 'none');
+    this.$playModeContent.css('visibility', 'hidden');
+  }
+  /**
+   * プレイモード時用の要素を設定
+   */
+  static appendPlayModeContentTo($wrapper) {
+    $wrapper.append($PLAY_MODE_CONTENT);
+  }
+  /**
+   * プレイモード時用の要素を表示
+   */
+  static openPlayModeContent() {
+    $PLAY_MODE_CONTENT.css('visibility', 'visible');
+  }
+  /**
+   * プレイモード時用の要素を非表示に
+   */
+  static closePlayModeContent() {
+    $PLAY_MODE_CONTENT.css('visibility', 'hidden');
+  }
+  /**
+   * プレイモード時用の要素にイベントハンドラーを設定
+   */
+  static addListnerToPlayModeContent(eventname, handler) {
+    $PLAY_MODE_CONTENT.on(eventname, handler);
   }
 };
 

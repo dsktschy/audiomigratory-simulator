@@ -29,8 +29,8 @@ const
   IS_FAKE = true;
 
 var
-  init, $cache, set$cache, map, marker, playlists, getPosition, amsData,
-  onSuccessToGetPosition, onErrorToGetPosition, onClickMarker, onGetData,
+  init, $cache, set$cache, map, playlists, getPosition, amsData, onGetData,
+  onSuccessToGetPosition, onErrorToGetPosition, onClickPlayModeContent, marker,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode,
   onTrackDomready;
@@ -148,15 +148,16 @@ onClickNoteIcon = () => {
     track.applyPosition(marker.getPosition());
   }
   selectedPlaylist.openPlayModeContent();
+  AMSPlaylist.openPlayModeContent();
   isPlayMode = true;
   return false;
 };
 
 /**
- * markerクリックイベントのハンドラー
+ * プレイモード時用の要素をクリックした時のハンドラー
  *   再生モードから抜ける
  */
-onClickMarker = () => {
+onClickPlayModeContent = () => {
   if (!isPlayMode) {
     return;
   }
@@ -169,6 +170,7 @@ onClickMarker = () => {
     playlist.setVisible(true);
   }
   selectedPlaylist.closePlayModeContent();
+  AMSPlaylist.closePlayModeContent();
   if (selectedTrack) {
     selectedTrack.closeDetail();
     selectedTrack = null;
@@ -248,8 +250,10 @@ init = ($wrapper) => {
   map = new AMSMap($cache.self);
   marker = new AMSMarker(map);
   marker.setVisible(false);
+  AMSPlaylist.appendPlayModeContentTo($cache.self);
+  AMSPlaylist.closePlayModeContent();
   map.addListener('click', onClickMap);
-  marker.addListener('click', onClickMarker);
+  AMSPlaylist.addListnerToPlayModeContent('click', onClickPlayModeContent);
   $cache.window.on('get-data', onGetData);
   getPosition(onSuccessToGetPosition, onErrorToGetPosition);
 };
