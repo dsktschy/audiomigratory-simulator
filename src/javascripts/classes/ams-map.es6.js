@@ -21,7 +21,10 @@ const
     mapTypeId: GM.MapTypeId.ROADMAP,
     disableDoubleClickZoom: true,
     zoomControl: true,
-    zoomControlOptions: {style: GM.ZoomControlStyle.SMALL},
+    zoomControlOptions: {
+      style: GM.ZoomControlStyle.SMALL,
+      position: GM.ControlPosition.BOTTOM_LEFT,
+    },
     panControl: false,
     streetViewControl: false,
     overviewMapControl: false,
