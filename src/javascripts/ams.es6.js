@@ -33,7 +33,7 @@ var
   onSuccessToGetPosition, onErrorToGetPosition, onClickPlayModeContent, marker,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode, onMoving,
-  onTrackDomready, onMovingEnd;
+  onTrackDomready, onMovingEnd, positionBeforeMoving;
 
 /** プレイリスト配列 */
 playlists = [];
@@ -43,6 +43,8 @@ selectedPlaylist = null;
 selectedTrack = null;
 /** 再生モードかどうか */
 isPlayMode = false;
+/** 自動再生前のマーカー位置 */
+positionBeforeMoving = null;
 
 /**
  * jqueryオブジェクトを保持
@@ -58,7 +60,10 @@ set$cache = () => {
  * mapクリックイベントのハンドラー
  */
 onClickMap = (event) => {
-  marker.cancelMoving();
+  if (positionBeforeMoving) {
+    marker.cancelMoving();
+    positionBeforeMoving = null;
+  }
   marker.setPosition(event.latLng);
   if (!isPlayMode) {
     return;
@@ -159,6 +164,7 @@ onClickNoteIcon = () => {
   if (totalVol) {
     return false;
   }
+  positionBeforeMoving = marker.getPosition();
   marker.cancelMoving();
   marker.moveBetween(
     selectedPlaylist.calculateEndPosition(true),
@@ -183,7 +189,13 @@ onMoving = () => {
 /**
  * Markerの自動移動終了時に実行される処理
  */
-onMovingEnd = () => {};
+onMovingEnd = () => {
+  marker.setPosition(positionBeforeMoving);
+  positionBeforeMoving = null;
+  for (let track of selectedPlaylist.tracks) {
+    track.applyVolume(track.calculateVolume(positionBeforeMoving), true);
+  }
+};
 
 /**
  * プレイモード時用の要素をクリックした時のハンドラー
@@ -193,7 +205,11 @@ onClickPlayModeContent = () => {
   if (!isPlayMode) {
     return;
   }
-  marker.cancelMoving();
+  if (positionBeforeMoving) {
+    marker.cancelMoving();
+    marker.setPosition(positionBeforeMoving);
+    positionBeforeMoving = null;
+  }
   for (let track of selectedPlaylist.tracks) {
     track.setVisible(false);
     track.circle.setVisible(false);
