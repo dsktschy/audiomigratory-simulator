@@ -33,6 +33,25 @@ Audio.prototype.stop = function() {
 };
 
 /**
+ * 指定のvolumeに設定する
+ */
+Audio.prototype.setVolume = function(targetVol, callback) {
+  var currentVol;
+  currentVol = this.volume;
+  if (currentVol === targetVol) {
+    return;
+  }
+  if (targetVol && !currentVol) {
+    this.playOnLoad();
+  }
+  this.volume = targetVol;
+  if (!targetVol) {
+    this.stop();
+  }
+  callback();
+};
+
+/**
  * 指定のvolumeまでフェードする
  */
 Audio.prototype.fadeTo = function(targetVol, callback) {

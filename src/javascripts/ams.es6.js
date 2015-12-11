@@ -32,8 +32,8 @@ var
   init, $cache, set$cache, map, playlists, getPosition, amsData, onGetData,
   onSuccessToGetPosition, onErrorToGetPosition, onClickPlayModeContent, marker,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
-  onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode,
-  onTrackDomready;
+  onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode, onMoving,
+  onTrackDomready, onMovingEnd;
 
 /** プレイリスト配列 */
 playlists = [];
@@ -58,12 +58,13 @@ set$cache = () => {
  * mapクリックイベントのハンドラー
  */
 onClickMap = (event) => {
+  marker.cancelMoving();
   marker.setPosition(event.latLng);
   if (!isPlayMode) {
     return;
   }
   for (let track of selectedPlaylist.tracks) {
-    track.applyPosition(marker.getPosition());
+    track.applyVolume(track.calculateVolume(marker.getPosition()), true);
   }
 };
 
@@ -137,21 +138,52 @@ onClickTrackJacket = (track) => {
 /**
  * Playlist音符アイコンクリック時のハンドラー
  *   再生モードに切り替える
+ *   MarkerがどのTrackも再生されない位置にある場合は全トラックを自動再生する
  */
 onClickNoteIcon = () => {
+  var vol, totalVol;
   for (let playlist of playlists) {
     playlist.setVisible(false);
   }
+  totalVol = 0;
   for (let track of selectedPlaylist.tracks) {
     track.setVisible(true);
     track.circle.setVisible(true);
-    track.applyPosition(marker.getPosition());
+    vol = track.calculateVolume(marker.getPosition());
+    track.applyVolume(vol, true);
+    totalVol += vol;
   }
   selectedPlaylist.openPlayModeContent();
   AMSPlaylist.openPlayModeContent();
   isPlayMode = true;
+  if (totalVol) {
+    return false;
+  }
+  marker.cancelMoving();
+  marker.moveBetween(
+    selectedPlaylist.calculateEndPosition(true),
+    selectedPlaylist.calculateEndPosition(false),
+    selectedPlaylist.getAllTrackPositions(),
+    selectedPlaylist.convertVehicleToSpeed(),
+    onMoving,
+    onMovingEnd
+  );
   return false;
 };
+
+/**
+ * Marker自動移動時の1ループごとに実行される処理
+ */
+onMoving = () => {
+  for (let track of selectedPlaylist.tracks) {
+    track.applyVolume(track.calculateVolume(marker.getPosition()), false);
+  }
+};
+
+/**
+ * Markerの自動移動終了時に実行される処理
+ */
+onMovingEnd = () => {};
 
 /**
  * プレイモード時用の要素をクリックした時のハンドラー
@@ -161,10 +193,11 @@ onClickPlayModeContent = () => {
   if (!isPlayMode) {
     return;
   }
+  marker.cancelMoving();
   for (let track of selectedPlaylist.tracks) {
     track.setVisible(false);
     track.circle.setVisible(false);
-    track.applyPosition(null);
+    track.applyVolume(0, true);
   }
   for (let playlist of playlists) {
     playlist.setVisible(true);

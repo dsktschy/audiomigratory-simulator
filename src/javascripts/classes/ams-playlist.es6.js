@@ -1,8 +1,11 @@
 import $ from 'jquery';
+import google from 'google';
 import AMSInfoBox from './ams-info-box';
 import AMSTrack from './ams-track';
 
 const
+  /** ショートカット */
+  GM = google.maps,
   /** モジュール名 */
   MOD_NAME = 'ams-playlist',
   /** ジャケットが存在しない場合に使用する画像のindex.htmlからの相対パス */
@@ -34,9 +37,18 @@ const
     `<div class="${MOD_NAME} ${BACK_CLASS} ${PLAY_MODE_CLASS}">` +
       BACK_HTML +
     '</div>'
-  );
+  ),
+  /** 列車/車のミリ秒速(m) */
+  M_PER_MS_FAST = 0.016,
+  /** 徒歩/無指定時のミリ秒速(m) */
+  M_PER_MS_DEFAULT = 0.001,
+  /** M_PER_MS_FASTの適用対象となるvehicle属性値 */
+  FAST_VEHICLES = ['train', 'Train', 'car', 'Car'];
 
-var AMSPlaylist;
+var AMSPlaylist, getDistanceBetween;
+
+/** ショートカット */
+getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
 
 /**
  * プレイリストクラス
@@ -112,6 +124,51 @@ AMSPlaylist = class extends AMSInfoBox {
    */
   closePlayModeContent() {
     this.$playModeContent.css('visibility', 'hidden');
+  }
+  /**
+   * 自動再生時の端の地点(開始/終了地点)の緯度経度を取得
+   */
+  calculateEndPosition(isHead) {
+    var
+      endIndex, nextIndex, endTrackPos, nextTrackPos, endTrackPosLat, endTrackPosLng,
+      trackDistance, trackDiffLat, trackDiffLng, ratio, endPosDiffLat,
+      endPosDiffLng;
+    endIndex = isHead ? 0 : this.tracks.length - 1;
+    nextIndex = endIndex + (isHead ? 1 : -1);
+    endTrackPos = this.tracks[endIndex].getPosition();
+    nextTrackPos = this.tracks[nextIndex].getPosition();
+    endTrackPosLat = endTrackPos.lat();
+    endTrackPosLng = endTrackPos.lng();
+    trackDistance = getDistanceBetween(endTrackPos, nextTrackPos);
+    trackDiffLat = nextTrackPos.lat() - endTrackPosLat;
+    trackDiffLng = nextTrackPos.lng() - endTrackPosLng;
+    ratio = this.tracks[endIndex].rad / trackDistance;
+    endPosDiffLat = trackDiffLat * ratio;
+    endPosDiffLng = trackDiffLng * ratio;
+    return new GM.LatLng(
+      endTrackPosLat - endPosDiffLat,
+      endTrackPosLng - endPosDiffLng
+    );
+  }
+  /**
+   * 全てのtrackの座標を配列で返す
+   */
+  getAllTrackPositions() {
+    var positions;
+    positions = [];
+    for (let track of this.tracks) {
+      positions.push(track.getPosition());
+    }
+    return positions;
+  }
+  /**
+   * vehicle属性から対応するミリ秒速(m)を返す
+   */
+  convertVehicleToSpeed() {
+    if (FAST_VEHICLES.indexOf(this.vehicle) > -1) {
+      return M_PER_MS_FAST;
+    }
+    return M_PER_MS_DEFAULT;
   }
   /**
    * プレイモード時用の要素を設定

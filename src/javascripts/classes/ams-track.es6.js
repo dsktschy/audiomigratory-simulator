@@ -54,21 +54,25 @@ AMSTrack = class extends AMSInfoBox {
     this.audio = createAudio(this.id);
   }
   /**
-   * 与えられた位置との距離を音量に反映する
+   * 与えられた位置から音量を計算して返す
    */
-  applyPosition(pos) {
-    var distance, vol;
-    if (pos === null) {
-      vol = 0;
-    } else {
-      distance = getDistanceBetween(pos, this.getPosition());
-      vol = distance >= this.rad
-        ? 0 : distance <= this.rad2
-          ? 1 : 1 - (distance - this.rad2) / (this.rad - this.rad2);
+  calculateVolume(pos) {
+    var distance;
+    if (!pos) {
+      return 0;
     }
-    this.audio.fadeTo(vol, () => {
-      console.log(this.title, this.audio.volume);
-    });
+    distance = getDistanceBetween(pos, this.getPosition());
+    return distance >= this.rad
+      ? 0 : distance <= this.rad2
+        ? 1 : 1 - (distance - this.rad2) / (this.rad - this.rad2);
+  }
+  /**
+   * 与えられた音量を適用する
+   */
+  applyVolume(vol, isFaded, callback = () => {}) {
+    var method;
+    method = isFaded ? 'fadeTo' : 'setVolume';
+    this.audio[method](vol, callback);
   }
 };
 
