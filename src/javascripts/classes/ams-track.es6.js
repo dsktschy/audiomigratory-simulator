@@ -74,6 +74,12 @@ AMSTrack = class extends AMSInfoBox {
     method = isFaded ? 'fadeTo' : 'setVolume';
     this.audio[method](vol, callback);
   }
+  /**
+   * フェード再生を強制終了
+   */
+  cancelFading() {
+    this.audio.cancelFading();
+  }
 };
 
 export default AMSTrack;

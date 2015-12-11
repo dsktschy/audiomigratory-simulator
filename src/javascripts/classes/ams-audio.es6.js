@@ -88,6 +88,14 @@ Audio.prototype.fadeTo = function(targetVol, callback) {
 };
 
 /**
+ * fadeToメソッドを強制終了
+ */
+Audio.prototype.cancelFading = function() {
+  clearInterval(this.intervalID);
+  this.intervalID = null;
+};
+
+/**
  * Audioはcallを受け付けないため完全な継承は不可能
  *   Audioのconstructorやその他メソッドを子クラスのインスタンスをthisとして実行できない
  * @exports

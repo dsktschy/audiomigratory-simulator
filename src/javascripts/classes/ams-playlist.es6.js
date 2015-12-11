@@ -162,6 +162,14 @@ AMSPlaylist = class extends AMSInfoBox {
     return positions;
   }
   /**
+   * 全てのtrackのフェード再生を強制終了
+   */
+  cancelAllTracksFading() {
+    for (let track of this.tracks) {
+      track.cancelFading();
+    }
+  }
+  /**
    * vehicle属性から対応するミリ秒速(m)を返す
    */
   convertVehicleToSpeed() {

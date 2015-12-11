@@ -165,6 +165,7 @@ onClickNoteIcon = () => {
     return false;
   }
   positionBeforeMoving = marker.getPosition();
+  selectedPlaylist.cancelAllTracksFading();
   marker.cancelMoving();
   marker.moveBetween(
     selectedPlaylist.calculateEndPosition(true),
