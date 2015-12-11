@@ -82,7 +82,7 @@ FAKE_DATA = {
         "user_img": "https://i1.sndcdn.com/avatars-000005739175-rq2r7k-large.jpg",
         "user_url": "http://soundcloud.com/ryufurusawa",
         "line": "原岡海岸",
-        "vehicle": "",
+        "vehicle": "train",
         "addresstr": "Japan,Chiba-ken:Japan,Minamibōsō-shi:Chiba-ken:Japan",
         "latlng": "35.04661312642613,139.8311053223775",
         "tracks": [
@@ -104,7 +104,7 @@ FAKE_DATA = {
           },
           {
             "tagstr": "Ambient \"Thula Borah\" \"Executioner's song\" FatCat \"FatCat Records\" \"FatCat Records demo\" Demo \"Demos 2014\" 2014",
-            "lng": "139.83083352519733",
+            "lng": "139.84083352519733",
             "user_name": "FatCat Records Demo",
             "user_img": "https://i1.sndcdn.com/avatars-000002698293-hdxrso-large.jpg",
             "genrestr": "Alternative Rock",
