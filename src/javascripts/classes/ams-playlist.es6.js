@@ -127,18 +127,22 @@ AMSPlaylist = class extends AMSInfoBox {
   }
   /**
    * 自動再生時の端の地点(開始/終了地点)の緯度経度を取得
+   *   総トラック数が1の場合はisHeadに応じてそのトラックの円の左右端を返す
    */
   calculateEndPosition(isHead) {
     var
-      endIndex, nextIndex, endTrackPos, nextTrackPos, endTrackPosLat, endTrackPosLng,
-      trackDistance, trackDiffLat, trackDiffLng, ratio, endPosDiffLat,
-      endPosDiffLng;
+      endIndex, nextIndex, endTrackPos, nextTrackPos, endTrackPosLat,
+      endTrackPosLng, trackDistance, trackDiffLat, trackDiffLng, ratio,
+      endPosDiffLat, endPosDiffLng, additionalVal;
+    additionalVal = isHead ? 1 : -1;
     endIndex = isHead ? 0 : this.tracks.length - 1;
-    nextIndex = endIndex + (isHead ? 1 : -1);
+    nextIndex = endIndex + additionalVal;
     endTrackPos = this.tracks[endIndex].getPosition();
-    nextTrackPos = this.tracks[nextIndex].getPosition();
     endTrackPosLat = endTrackPos.lat();
     endTrackPosLng = endTrackPos.lng();
+    nextTrackPos = this.tracks.length > 1
+      ? this.tracks[nextIndex].getPosition()
+      : new GM.LatLng(endTrackPosLat, endTrackPosLng + additionalVal);
     trackDistance = getDistanceBetween(endTrackPos, nextTrackPos);
     trackDiffLat = nextTrackPos.lat() - endTrackPosLat;
     trackDiffLng = nextTrackPos.lng() - endTrackPosLng;
