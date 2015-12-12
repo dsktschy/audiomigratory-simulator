@@ -33,7 +33,9 @@ var
   onSuccessToGetPosition, onErrorToGetPosition, onClickPlayModeContent, marker,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode, onMoving,
-  onTrackDomready, onMovingEnd, positionBeforeMoving;
+  onTrackDomready, onMovingEnd, positionBeforeMoving, readyPlaylistCount,
+  playlistTotal, readyTrackCount, trackTotal, onAllDomready,
+  preselectedPlaylist;
 
 /** プレイリスト配列 */
 playlists = [];
@@ -45,6 +47,12 @@ selectedTrack = null;
 isPlayMode = false;
 /** 自動再生前のマーカー位置 */
 positionBeforeMoving = null;
+/** DOM読み込みが完了したプレイリストの数 */
+readyPlaylistCount = 0;
+/** DOM読み込みが完了したトラックの数 */
+readyTrackCount = 0;
+/** iframeで指定されたプレイリスト */
+preselectedPlaylist = null;
 
 /**
  * jqueryオブジェクトを保持
@@ -53,6 +61,7 @@ set$cache = () => {
   $cache = {
     self: $(`#${MOD_NAME}`),
     window: $(window),
+    iframe: $('#ams-iframe', parent.document),
   };
 };
 
@@ -99,6 +108,10 @@ onErrorToGetPosition = (e) => {
  */
 onPlaylistDomready = (playlist) => {
   playlist.closeDetail();
+  readyPlaylistCount++;
+  if (readyPlaylistCount === playlistTotal && readyTrackCount === trackTotal) {
+    $cache.window.trigger('all-domready');
+  }
 };
 
 /**
@@ -108,6 +121,22 @@ onTrackDomready = (track) => {
   track.closeDetail();
   track.setVisible(false);
   track.circle.setVisible(false);
+  readyTrackCount++;
+  if (readyPlaylistCount === playlistTotal && readyTrackCount === trackTotal) {
+    $cache.window.trigger('all-domready');
+  }
+};
+
+/**
+ * 全てのPlaylist,Trackオブジェクトのcontentプロパティ描画が完了した時のハンドラー
+ */
+onAllDomready = () => {
+  if (!preselectedPlaylist) {
+    return;
+  }
+  map.setCenter(preselectedPlaylist.getPosition());
+  onClickPlaylistJacket(preselectedPlaylist);
+  onClickNoteIcon();
 };
 
 /**
@@ -233,10 +262,15 @@ onClickPlayModeContent = () => {
  * データ取得完了時のコールバック
  */
 onGetData = (event, data) => {
+  var preselectedPlaylistID;
   if (!parseInt(data.hits, 10)) {
     console.log('json.result.hits: 0');
     return;
   }
+  preselectedPlaylistID = $cache.iframe.length
+    ? $cache.iframe.data('playlist-id') : '';
+  playlistTotal = data.playlists.length;
+  trackTotal = 0;
   for (let _data of data.playlists) {
     var playlist;
     playlist = new AMSPlaylist(_data);
@@ -259,6 +293,10 @@ onGetData = (event, data) => {
       track.circle.open(map);
     }
     playlists.push(playlist);
+    trackTotal += playlist.tracks.length;
+    if (playlist.id === `${preselectedPlaylistID}`) {
+      preselectedPlaylist = playlist;
+    }
   }
 };
 
@@ -269,11 +307,10 @@ onGetData = (event, data) => {
  *   現在地が取得できない場合はデフォルトの位置情報を使用
  */
 getPosition = (onSuccess, onError) => {
-  var $iframe, latitude, longitude;
-  $iframe = $('#ams-iframe', parent.document);
-  if ($iframe.length) {
-    latitude = parseFloat($iframe.data('lat'));
-    longitude = parseFloat($iframe.data('lng'));
+  var latitude, longitude;
+  if ($cache.iframe.length) {
+    latitude = parseFloat($cache.iframe.data('lat'));
+    longitude = parseFloat($cache.iframe.data('lng'));
     if (!isNaN(latitude) && !isNaN(longitude)) {
       onSuccess({coords: {latitude, longitude}});
       return;
@@ -304,7 +341,10 @@ init = ($wrapper) => {
   AMSPlaylist.closePlayModeContent();
   map.addListener('click', onClickMap);
   AMSPlaylist.addListnerToPlayModeContent('click', onClickPlayModeContent);
-  $cache.window.on('get-data', onGetData);
+  $cache.window.on({
+    'get-data': onGetData,
+    'all-domready': onAllDomready,
+  });
   getPosition(onSuccessToGetPosition, onErrorToGetPosition);
 };
 
