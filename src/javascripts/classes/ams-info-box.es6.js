@@ -87,13 +87,11 @@ AMSInfoBox = class extends InfoBox {
   }
   /**
    * detailModeに切り替え
-   *   widthはsetContentの処理内で内容に合わせて再設定されるためsetOptionsはその後で
    */
   openDetail() {
     var $content, width;
     $content = $(this.getContent());
     $content.children(':not(:first)').css('display', 'block');
-    this.setContent($content[0]);
     width = AMSInfoBox.getFixedOuterWidth($content);
     this.setOptions({
       boxStyle: {width: `${width}px`},
@@ -103,14 +101,13 @@ AMSInfoBox = class extends InfoBox {
   }
   /**
    * detailMode解除
-   *   widthはsetContentの処理内で内容に合わせて再設定されるためsetOptionsでは省略
    */
   closeDetail() {
     var $content;
     $content = $(this.getContent());
     $content.children(':not(:first)').css('display', 'none');
-    this.setContent($content[0]);
     this.setOptions({
+      boxStyle: {width: 'auto'},
       pixelOffset: new GM.Size(-(DETAIL_CLOSED_WIDTH / 2), 0),
     });
     this.setZIndex(CLOSED_Z_INDEX);
