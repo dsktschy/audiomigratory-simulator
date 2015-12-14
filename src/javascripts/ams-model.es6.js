@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 var
   init, getData, amsData, onSuccessToGetParsedData, onErrorToGetParsedData,
-  set$cache, $cache;
+  set$cache, $cache, result, getResult;
 
 /**
  * jqueryオブジェクトを保持
@@ -21,7 +21,12 @@ onSuccessToGetParsedData = (data) => {
     console.log('json.status: 0');
     return;
   }
-  $cache.window.trigger('get-data', data.result);
+  if (!parseInt(data.result.hits, 10)) {
+    console.log('json.result.hits: 0');
+    return;
+  }
+  result = data.result;
+  $cache.window.trigger('get-data');
 };
 
 /**
@@ -44,6 +49,13 @@ getData = (lat, lng) => {
 };
 
 /**
+ * 取得したデータを返す
+ *   resultを書き換えられないようコピーを返す
+ * @exports
+ */
+getResult = () => $.extend(true, {}, result) || {};
+
+/**
  * module起動
  * @exports
  */
@@ -55,4 +67,5 @@ init = (dataMod) => {
 export default {
   init,
   getData,
+  getResult,
 };

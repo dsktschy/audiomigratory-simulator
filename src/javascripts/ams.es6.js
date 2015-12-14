@@ -261,12 +261,9 @@ onClickPlayModeContent = () => {
 /**
  * データ取得完了時のコールバック
  */
-onGetData = (event, data) => {
-  var preselectedPlaylistID;
-  if (!parseInt(data.hits, 10)) {
-    console.log('json.result.hits: 0');
-    return;
-  }
+onGetData = () => {
+  var data, preselectedPlaylistID;
+  data = amsModel.getResult();
   preselectedPlaylistID = $cache.iframe.length
     ? $cache.iframe.data('playlist-id') : '';
   playlistTotal = data.playlists.length;
