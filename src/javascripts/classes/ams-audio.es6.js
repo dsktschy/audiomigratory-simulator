@@ -16,6 +16,9 @@ var createAudio;
  * 再生されるまでplayを試みる
  */
 Audio.prototype.playOnLoad = function() {
+  if (!this.src) {
+    this.src = this._src;
+  }
   if (!this.readyState) {
     setTimeout(this.playOnLoad.bind(this), RETRY_DELAY);
     return;
@@ -98,15 +101,21 @@ Audio.prototype.cancelFading = function() {
 /**
  * Audioはcallを受け付けないため完全な継承は不可能
  *   Audioのconstructorやその他メソッドを子クラスのインスタンスをthisとして実行できない
+ *   preload属性は、autoでsrc属性を直後に設定すると一気に全トラックがリクエストされ
+ *   ブラウザーが固まってしまう。かといってmetadataでは再生時にChromeで音が途切れてしまう
+ *   noneを使用したいがWebkitでの挙動がautoと変わらないため
+ *   autoに設定した上で再生直前にsrc属性を手動で設定する
  * @exports
  */
 createAudio = (id) => {
-  var src, audio;
-  src = `//api.soundcloud.com/tracks/${id}/stream?client_id=${SC_CLIENT_ID}`;
-  audio = new Audio(src);
+  var _src, audio;
+  _src = `//api.soundcloud.com/tracks/${id}/stream?client_id=${SC_CLIENT_ID}`;
+  audio = new Audio();
   audio.loop = true;
   audio.volume = 0;
   audio.intervalID = null;
+  audio.preload = 'auto';
+  audio._src = _src;
   return audio;
 };
 
