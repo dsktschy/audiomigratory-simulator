@@ -31,7 +31,7 @@ rules:
   empty-args: 2
   hex-length: 2
   hex-notation: 2
-  indentation: 2
+  indentation: 1
   leading-zero: 2
   nesting-depth: 0
   property-sort-order: 0
