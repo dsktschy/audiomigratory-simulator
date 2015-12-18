@@ -5,7 +5,7 @@ const
   GM = google.maps,
   /** 円の透明度 */
   CIRCLE_FILL_OPACITY = 0.35,
-  /** GM.Circleコンストラクターに渡すオプション */
+  /** GM.Circleコンストラクタに渡すオプション */
   CIRCLE_OPT_MAP = {
     center: undefined,
     strokeWeight: 0,
@@ -24,6 +24,8 @@ var AMSCircle;
 AMSCircle = class {
   /**
    * constructor
+   * @param {Object} position
+   * @param {Array} rads
    */
   constructor(position, rads) {
     var hsl;
@@ -38,6 +40,7 @@ AMSCircle = class {
   }
   /**
    * 設置する
+   * @param {Object} map
    */
   open(map) {
     for (let circle of this) {
@@ -46,6 +49,7 @@ AMSCircle = class {
   }
   /**
    * 表示非表示を切り替える
+   * @param {boolean} bool
    */
   setVisible(bool) {
     for (let circle of this) {

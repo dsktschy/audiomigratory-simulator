@@ -15,6 +15,7 @@ set$cache = () => {
 
 /**
  * データ取得成功時のコールバック
+ * @param {Object} data
  */
 onSuccessToGetParsedData = (data) => {
   if (!data.status) {
@@ -31,6 +32,7 @@ onSuccessToGetParsedData = (data) => {
 
 /**
  * データ取得失敗時のコールバック
+ * @param {Object} e
  */
 onErrorToGetParsedData = (e) => {
   console.log(e);
@@ -39,6 +41,8 @@ onErrorToGetParsedData = (e) => {
 /**
  * データ取得開始
  * @exports
+ * @param {number} lat
+ * @param {number} lng
  */
 getData = (lat, lng) => {
   amsData.getParsedData(
@@ -58,6 +62,7 @@ getResult = () => $.extend(true, {}, result) || {};
 /**
  * module起動
  * @exports
+ * @param {Object} dataMod
  */
 init = (dataMod) => {
   set$cache();

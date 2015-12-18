@@ -19,7 +19,7 @@ const
   BOLD_OFFSET = 2,
   /** 非detailMode時のInfoBoxのwidth */
   DETAIL_CLOSED_WIDTH = INFO_BOX_SIZE + INFO_BOX_PADDING_LR,
-  /** InfoBoxコンストラクターに渡すオプション */
+  /** InfoBoxコンストラクタに渡すオプション */
   INFO_BOX_OPT_MAP = {
     position: undefined,
     content: undefined,
@@ -61,6 +61,8 @@ Object.defineProperty(InfoBox.prototype, 'constructor', {
 AMSInfoBox = class extends InfoBox {
   /**
    * constructor
+   * @param {Object} data
+   * @param {string} content
    */
   constructor(data, content = '') {
     var lat, lng;
@@ -77,7 +79,9 @@ AMSInfoBox = class extends InfoBox {
     }
   }
   /**
-   * ジャケットにイベントハンドラーを設定
+   * ジャケットにイベントハンドラを設定
+   * @param {string} eventname
+   * @param {Function} handler
    */
   addListnerToJacket(eventname, handler) {
     var $content;
@@ -114,6 +118,7 @@ AMSInfoBox = class extends InfoBox {
   }
   /**
    * infoBoxのwidthがautoでは内容量と合致しない場合があるため矯正する
+   * @param {Object} $content
    */
   static getFixedOuterWidth($content) {
     var width;
@@ -129,6 +134,7 @@ AMSInfoBox = class extends InfoBox {
    * font-weight:bold;で広がった幅を反映した正しいouterWidth(の近似値)を算出
    *   webkit以外では広がった幅がouterWidthに反映されない
    *   上下2行あるうち広い方の幅を使用する
+   * @param {Object} column
    */
   static getDetailColumnOuterWidth(column) {
     var $column, largerWidth;

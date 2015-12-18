@@ -66,7 +66,8 @@ set$cache = () => {
 };
 
 /**
- * mapクリックイベントのハンドラー
+ * mapクリックイベントのハンドラ
+ * @param {Object} event
  */
 onClickMap = (event) => {
   if (positionBeforeMoving) {
@@ -84,6 +85,7 @@ onClickMap = (event) => {
 
 /**
  * 現在地取得成功時のコールバック
+ * @param {Object}
  */
 onSuccessToGetPosition = ({coords: {latitude, longitude}}) => {
   var latLng;
@@ -96,6 +98,7 @@ onSuccessToGetPosition = ({coords: {latitude, longitude}}) => {
 
 /**
  * 現在地取得失敗時のコールバック
+ * @param {Object} e
  */
 onErrorToGetPosition = (e) => {
   marker.setVisible(true);
@@ -104,7 +107,8 @@ onErrorToGetPosition = (e) => {
 };
 
 /**
- * Playlistオブジェクトcontentプロパティ描画完了時のハンドラー
+ * Playlistオブジェクトcontentプロパティ描画完了時のハンドラ
+ * @param {Object} playlist
  */
 onPlaylistDomready = (playlist) => {
   playlist.closeDetail();
@@ -115,7 +119,8 @@ onPlaylistDomready = (playlist) => {
 };
 
 /**
- * Trackオブジェクトcontentプロパティ描画完了時のハンドラー
+ * Trackオブジェクトcontentプロパティ描画完了時のハンドラ
+ * @param {Object} track
  */
 onTrackDomready = (track) => {
   track.closeDetail();
@@ -128,7 +133,7 @@ onTrackDomready = (track) => {
 };
 
 /**
- * 全てのPlaylist,Trackオブジェクトのcontentプロパティ描画が完了した時のハンドラー
+ * 全てのPlaylist,Trackオブジェクトのcontentプロパティ描画が完了した時のハンドラ
  */
 onAllDomready = () => {
   if (!preselectedPlaylist) {
@@ -140,8 +145,9 @@ onAllDomready = () => {
 };
 
 /**
- * Playlistジャケットクリック時のハンドラー
+ * Playlistジャケットクリック時のハンドラ
  *   選択中PlaylistをクリックされたPlaylistに切り替える
+ * @param {Object} playlist
  */
 onClickPlaylistJacket = (playlist) => {
   if (selectedPlaylist === playlist) {
@@ -155,8 +161,9 @@ onClickPlaylistJacket = (playlist) => {
 };
 
 /**
- * Trackジャケットクリック時のハンドラー
+ * Trackジャケットクリック時のハンドラ
  *   選択中TrackをクリックされたTrackに切り替える
+ * @param {Object} track
  */
 onClickTrackJacket = (track) => {
   if (selectedTrack === track) {
@@ -170,7 +177,7 @@ onClickTrackJacket = (track) => {
 };
 
 /**
- * Playlist音符アイコンクリック時のハンドラー
+ * Playlist音符アイコンクリック時のハンドラ
  *   再生モードに切り替える
  *   MarkerがどのTrackも再生されない位置にある場合は全トラックを自動再生する
  */
@@ -228,7 +235,7 @@ onMovingEnd = () => {
 };
 
 /**
- * プレイモード時用の要素をクリックした時のハンドラー
+ * プレイモード時用の要素をクリックした時のハンドラ
  *   再生モードから抜ける
  */
 onClickPlayModeContent = () => {
@@ -302,6 +309,8 @@ onGetData = () => {
  *   iframeからリクエストされている場合はiframeの属性から取得
  *   属性が不正または直接リクエストされた場合は現在地を取得
  *   現在地が取得できない場合はデフォルトの位置情報を使用
+ * @param {Function} onSuccess
+ * @param {Function} onError
  */
 getPosition = (onSuccess, onError) => {
   var latitude, longitude;
@@ -323,6 +332,7 @@ getPosition = (onSuccess, onError) => {
 /**
  * module起動
  * @exports
+ * @param {Object} $wrapper
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);

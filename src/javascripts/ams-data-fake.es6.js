@@ -14,6 +14,9 @@ var init, getParsedData, isAJAXSimulating;
  * データ取得とパースを模倣する
  *   script要素が予め存在していなかった場合はAJAXを模倣する
  * @exports
+ * @param {Object} params
+ * @param {Function} onSuccess
+ * @param {Function} onError
  */
 getParsedData = (params, onSuccess, onError) => {
   if (isAJAXSimulating) {

@@ -55,6 +55,7 @@ AMSTrack = class extends AMSInfoBox {
   }
   /**
    * 与えられた位置から音量を計算して返す
+   * @param {Object} pos
    */
   calculateVolume(pos) {
     var distance;
@@ -68,6 +69,9 @@ AMSTrack = class extends AMSInfoBox {
   }
   /**
    * 与えられた音量を適用する
+   * @param {number} vol
+   * @param {boolean} isFaded
+   * @param {Function} callback
    */
   applyVolume(vol, isFaded, callback = () => {}) {
     var method;

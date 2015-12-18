@@ -3,6 +3,9 @@ var init, getParsedData;
 /**
  * データを取得してパース
  * @exports
+ * @param {Object} params
+ * @param {Function} onSuccess
+ * @param {Function} onError
  */
 getParsedData = (params, onSuccess, onError) => {
 

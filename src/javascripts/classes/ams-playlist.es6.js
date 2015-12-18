@@ -99,7 +99,9 @@ AMSPlaylist = class extends AMSInfoBox {
     );
   }
   /**
-   * 音符アイコンにイベントハンドラーを設定
+   * 音符アイコンにイベントハンドラを設定
+   * @param {string} eventname
+   * @param {Function} handler
    */
   addListnerToNoteIcon(eventname, handler) {
     var $content;
@@ -109,6 +111,7 @@ AMSPlaylist = class extends AMSInfoBox {
   }
   /**
    * プレイモード時用の要素を設定
+   * @param {Object} $wrapper
    */
   appendPlayModeContentTo($wrapper) {
     $wrapper.append(this.$playModeContent);
@@ -128,6 +131,7 @@ AMSPlaylist = class extends AMSInfoBox {
   /**
    * 自動再生時の端の地点(開始/終了地点)の緯度経度を取得
    *   総トラック数が1の場合はisHeadに応じてそのトラックの円の左右端を返す
+   * @param {boolean} isHead
    */
   calculateEndPosition(isHead) {
     var
@@ -184,6 +188,7 @@ AMSPlaylist = class extends AMSInfoBox {
   }
   /**
    * プレイモード時用の要素を設定
+   * @param {Object} $wrapper
    */
   static appendPlayModeContentTo($wrapper) {
     $wrapper.append($PLAY_MODE_CONTENT);
@@ -201,7 +206,9 @@ AMSPlaylist = class extends AMSInfoBox {
     $PLAY_MODE_CONTENT.css('visibility', 'hidden');
   }
   /**
-   * プレイモード時用の要素にイベントハンドラーを設定
+   * プレイモード時用の要素にイベントハンドラを設定
+   * @param {string} eventname
+   * @param {Function} handler
    */
   static addListnerToPlayModeContent(eventname, handler) {
     $PLAY_MODE_CONTENT.on(eventname, handler);

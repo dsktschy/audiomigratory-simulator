@@ -56,6 +56,7 @@ set$cache = () => {
 /**
  * module起動
  * @exports
+ * @param {Object} $wrapper
  */
 init = ($wrapper) => {
   $wrapper.append(HTML);

@@ -37,6 +37,8 @@ Audio.prototype.stop = function() {
 
 /**
  * 指定のvolumeに設定する
+ * @param {number} targetVol
+ * @param {Function} callback
  */
 Audio.prototype.setVolume = function(targetVol, callback) {
   var currentVol;
@@ -56,6 +58,8 @@ Audio.prototype.setVolume = function(targetVol, callback) {
 
 /**
  * 指定のvolumeまでフェードする
+ * @param {number} targetVol
+ * @param {Function} callback
  */
 Audio.prototype.fadeTo = function(targetVol, callback) {
   var currentVol, volPerInterval;
@@ -100,12 +104,13 @@ Audio.prototype.cancelFading = function() {
 
 /**
  * Audioはcallを受け付けないため完全な継承は不可能
- *   Audioのconstructorやその他メソッドを子クラスのインスタンスをthisとして実行できない
+ *   Audioのconstructorやその他メソッドは子クラスのインスタンスをthisとして実行できない
  *   preload属性は、autoでsrc属性を直後に設定すると一気に全トラックがリクエストされ
- *   ブラウザーが固まってしまう。かといってmetadataでは再生時にChromeで音が途切れてしまう
+ *   ブラウザが固まってしまう。かといってmetadataでは再生時にChromeで音が途切れてしまう
  *   noneを使用したいがWebkitでの挙動がautoと変わらないため
  *   autoに設定した上で再生直前にsrc属性を手動で設定する
  * @exports
+ * @param {string} id
  */
 createAudio = (id) => {
   var _src, audio;

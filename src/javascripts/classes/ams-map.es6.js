@@ -14,7 +14,7 @@ const
   DEFAULT_LAT = 35.689634,
   /** 位置情報取得失敗時に使用する経度 */
   DEFAULT_LNG = 139.692101,
-  /** GM.Mapコンストラクターに渡すオプション */
+  /** GM.Mapコンストラクタに渡すオプション */
   MAP_OPT_MAP = {
     zoom: DEFAULT_ZOOM,
     center: new GM.LatLng(DEFAULT_LAT, DEFAULT_LNG),
@@ -60,6 +60,7 @@ var AMSMap;
 AMSMap = class extends GM.Map {
   /**
    * constructor
+   * @param {Object} $wrapper
    */
   constructor($wrapper) {
     $wrapper.append(HTML);

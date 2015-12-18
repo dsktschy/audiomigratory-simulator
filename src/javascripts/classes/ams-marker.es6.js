@@ -13,7 +13,7 @@ const
   FILL_COLOR = '#1e90ff',
   /** Markerの透明度 */
   FILL_OPACITY = 1,
-  /** GM.Markerコンストラクターに渡すオプション */
+  /** GM.Markerコンストラクタに渡すオプション */
   MARKER_OPT_MAP = {
     map: undefined,
     position: undefined,
@@ -41,6 +41,7 @@ getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
 AMSMarker = class extends GM.Marker {
   /**
    * constructor
+   * @param {Object} map
    */
   constructor(map) {
     MARKER_OPT_MAP.map = map;
@@ -50,6 +51,10 @@ AMSMarker = class extends GM.Marker {
   }
   /**
    * 指定座標まで移動
+   * @param {Object} goalPos
+   * @param {number} mPerMS
+   * @param {Function} onLoop
+   * @param {Function} onEnd
    */
   move(goalPos, mPerMS, onLoop, onEnd) {
     var
@@ -86,6 +91,12 @@ AMSMarker = class extends GM.Marker {
   }
   /**
    * 指定された経由地点を経過しながら目標の座標まで移動
+   * @param {Object} startPos
+   * @param {Object} goalPos
+   * @param {Array} waypoints
+   * @param {number} mPerMS
+   * @param {Function} onLoop
+   * @param {Function} onEnd
    */
   moveBetween(startPos, goalPos, waypoints, mPerMS, onLoop, onEnd) {
     var moveFuncs;
