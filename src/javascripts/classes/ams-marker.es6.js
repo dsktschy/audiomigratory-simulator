@@ -39,6 +39,7 @@ getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
  * @exports
  */
 AMSMarker = class extends GM.Marker {
+
   /**
    * constructor
    * @param {Object} map
@@ -49,6 +50,7 @@ AMSMarker = class extends GM.Marker {
     super(MARKER_OPT_MAP);
     this.intervalID = null;
   }
+
   /**
    * 指定座標まで移動
    * @param {Object} goalPos
@@ -89,6 +91,7 @@ AMSMarker = class extends GM.Marker {
       loopCount++;
     }, INTERVAL_DELAY);
   }
+
   /**
    * 指定された経由地点を経過しながら目標の座標まで移動
    * @param {Object} startPos
@@ -111,6 +114,7 @@ AMSMarker = class extends GM.Marker {
     this.setPosition(startPos);
     moveFuncs.pop()();
   }
+
   /**
    * moveメソッドを強制終了
    */

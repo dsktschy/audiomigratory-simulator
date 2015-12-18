@@ -22,6 +22,7 @@ var AMSCircle;
  * @exports
  */
 AMSCircle = class {
+
   /**
    * constructor
    * @param {Object} position
@@ -38,6 +39,7 @@ AMSCircle = class {
     }
     this.length = rads.length;
   }
+
   /**
    * 設置する
    * @param {Object} map
@@ -47,6 +49,7 @@ AMSCircle = class {
       circle.setMap(map);
     }
   }
+
   /**
    * 表示非表示を切り替える
    * @param {boolean} bool
@@ -56,6 +59,7 @@ AMSCircle = class {
       circle.setVisible(bool);
     }
   }
+
   /**
    * Iterableにする
    */

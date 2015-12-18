@@ -58,6 +58,7 @@ var AMSMap;
  * @exports
  */
 AMSMap = class extends GM.Map {
+
   /**
    * constructor
    * @param {Object} $wrapper

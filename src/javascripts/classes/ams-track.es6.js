@@ -29,6 +29,7 @@ getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
  * @exports
  */
 AMSTrack = class extends AMSInfoBox {
+
   /**
    * constructor
    * @param {Object} data APIから取得したJSONデータのplaylists[i].tracks[i]
@@ -53,6 +54,7 @@ AMSTrack = class extends AMSInfoBox {
     this.circle = new AMSCircle(this.getPosition(), [this.rad, this.rad2]);
     this.audio = createAudio(this.id);
   }
+
   /**
    * 与えられた位置から音量を計算して返す
    * @param {Object} pos
@@ -67,6 +69,7 @@ AMSTrack = class extends AMSInfoBox {
       ? 0 : distance <= this.rad2
         ? 1 : 1 - (distance - this.rad2) / (this.rad - this.rad2);
   }
+
   /**
    * 与えられた音量を適用する
    * @param {number} vol
@@ -78,6 +81,7 @@ AMSTrack = class extends AMSInfoBox {
     method = isFaded ? 'fadeTo' : 'setVolume';
     this.audio[method](vol, callback);
   }
+
   /**
    * フェード再生を強制終了
    */

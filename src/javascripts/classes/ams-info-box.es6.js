@@ -59,6 +59,7 @@ Object.defineProperty(InfoBox.prototype, 'constructor', {
  * @exports
  */
 AMSInfoBox = class extends InfoBox {
+
   /**
    * constructor
    * @param {Object} data
@@ -78,6 +79,7 @@ AMSInfoBox = class extends InfoBox {
       this[key] = data[key];
     }
   }
+
   /**
    * ジャケットにイベントハンドラを設定
    * @param {string} eventname
@@ -89,6 +91,7 @@ AMSInfoBox = class extends InfoBox {
     $content.children(':first').on(eventname, handler);
     this.setContent($content[0]);
   }
+
   /**
    * detailModeに切り替え
    */
@@ -103,6 +106,7 @@ AMSInfoBox = class extends InfoBox {
     });
     this.setZIndex(OPEN_Z_INDEX);
   }
+
   /**
    * detailMode解除
    */
@@ -116,6 +120,7 @@ AMSInfoBox = class extends InfoBox {
     });
     this.setZIndex(CLOSED_Z_INDEX);
   }
+
   /**
    * infoBoxのwidthがautoでは内容量と合致しない場合があるため矯正する
    * @param {Object} $content
@@ -130,6 +135,7 @@ AMSInfoBox = class extends InfoBox {
     });
     return width;
   }
+
   /**
    * font-weight:bold;で広がった幅を反映した正しいouterWidth(の近似値)を算出
    *   webkit以外では広がった幅がouterWidthに反映されない

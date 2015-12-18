@@ -55,6 +55,7 @@ getDistanceBetween = GM.geometry.spherical.computeDistanceBetween;
  * @exports
  */
 AMSPlaylist = class extends AMSInfoBox {
+
   /**
    * constructor
    *   AMSTrackと扱いを揃えるため
@@ -98,6 +99,7 @@ AMSPlaylist = class extends AMSInfoBox {
       '</div>'
     );
   }
+
   /**
    * 音符アイコンにイベントハンドラを設定
    * @param {string} eventname
@@ -109,6 +111,7 @@ AMSPlaylist = class extends AMSInfoBox {
     $content.children(':last').on(eventname, handler);
     this.setContent($content[0]);
   }
+
   /**
    * プレイモード時用の要素を設定
    * @param {Object} $wrapper
@@ -116,18 +119,21 @@ AMSPlaylist = class extends AMSInfoBox {
   appendPlayModeContentTo($wrapper) {
     $wrapper.append(this.$playModeContent);
   }
+
   /**
    * プレイモード時用の要素を表示
    */
   openPlayModeContent() {
     this.$playModeContent.css('visibility', 'visible');
   }
+
   /**
    * プレイモード時用の要素を非表示に
    */
   closePlayModeContent() {
     this.$playModeContent.css('visibility', 'hidden');
   }
+
   /**
    * 自動再生時の端の地点(開始/終了地点)の緯度経度を取得
    *   総トラック数が1の場合はisHeadに応じてそのトラックの円の左右端を返す
@@ -158,6 +164,7 @@ AMSPlaylist = class extends AMSInfoBox {
       endTrackPosLng - endPosDiffLng
     );
   }
+
   /**
    * 全てのtrackの座標を配列で返す
    */
@@ -169,6 +176,7 @@ AMSPlaylist = class extends AMSInfoBox {
     }
     return positions;
   }
+
   /**
    * 全てのtrackのフェード再生を強制終了
    */
@@ -177,6 +185,7 @@ AMSPlaylist = class extends AMSInfoBox {
       track.cancelFading();
     }
   }
+
   /**
    * vehicle属性から対応するミリ秒速(m)を返す
    */
@@ -186,6 +195,7 @@ AMSPlaylist = class extends AMSInfoBox {
     }
     return M_PER_MS_DEFAULT;
   }
+
   /**
    * プレイモード時用の要素を設定
    * @param {Object} $wrapper
@@ -193,18 +203,21 @@ AMSPlaylist = class extends AMSInfoBox {
   static appendPlayModeContentTo($wrapper) {
     $wrapper.append($PLAY_MODE_CONTENT);
   }
+
   /**
    * プレイモード時用の要素を表示
    */
   static openPlayModeContent() {
     $PLAY_MODE_CONTENT.css('visibility', 'visible');
   }
+
   /**
    * プレイモード時用の要素を非表示に
    */
   static closePlayModeContent() {
     $PLAY_MODE_CONTENT.css('visibility', 'hidden');
   }
+
   /**
    * プレイモード時用の要素にイベントハンドラを設定
    * @param {string} eventname
