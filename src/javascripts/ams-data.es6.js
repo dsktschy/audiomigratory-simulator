@@ -3,11 +3,11 @@ var init, getParsedData;
 /**
  * データを取得してパース
  * @exports
- * @param {Object} params
+ * @param {Object} paramMap
  * @param {Function} onSuccess
  * @param {Function} onError
  */
-getParsedData = (params, onSuccess, onError) => {
+getParsedData = (paramMap, onSuccess, onError) => {
 
 };
 
