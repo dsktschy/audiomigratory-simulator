@@ -33,7 +33,7 @@ var
   onSuccessToGetPosition, onErrorToGetPosition, onClickPlayModeContent, marker,
   onClickMap, onPlaylistDomready, onClickPlaylistJacket, onClickTrackJacket,
   onClickNoteIcon, selectedPlaylist, selectedTrack, isPlayMode, onMoving,
-  onTrackDomready, onMovingEnd, positionBeforeMoving, readyPlaylistCount,
+  onTrackDomready, onMovingEnd, readyPlaylistCount, beforeMovingMap,
   playlistTotal, readyTrackCount, trackTotal, onAllDomready,
   preselectedPlaylist;
 
@@ -45,8 +45,12 @@ selectedPlaylist = null;
 selectedTrack = null;
 /** 再生モードかどうか */
 isPlayMode = false;
-/** 自動再生前のマーカー位置 */
-positionBeforeMoving = null;
+/** 自動再生前の情報 */
+beforeMovingMap = {
+  markerPosition: null,
+  mapCenter: null,
+  mapZoom: null,
+};
 /** DOM読み込みが完了したプレイリストの数 */
 readyPlaylistCount = 0;
 /** DOM読み込みが完了したトラックの数 */
@@ -70,9 +74,11 @@ set$cache = () => {
  * @param {Object} event
  */
 onClickMap = (event) => {
-  if (positionBeforeMoving) {
+  if (beforeMovingMap.markerPosition) {
     marker.cancelMoving();
-    positionBeforeMoving = null;
+    beforeMovingMap.markerPosition = null;
+    beforeMovingMap.mapCenter = null;
+    beforeMovingMap.mapZoom = null;
   }
   marker.setPosition(event.latLng);
   if (!isPlayMode) {
@@ -139,7 +145,6 @@ onAllDomready = () => {
   if (!preselectedPlaylist) {
     return;
   }
-  map.setCenter(preselectedPlaylist.getPosition());
   onClickPlaylistJacket(preselectedPlaylist);
   onClickNoteIcon();
 };
@@ -200,7 +205,9 @@ onClickNoteIcon = () => {
   if (totalVol) {
     return false;
   }
-  positionBeforeMoving = marker.getPosition();
+  beforeMovingMap.markerPosition = marker.getPosition();
+  beforeMovingMap.mapCenter = map.getCenter();
+  beforeMovingMap.mapZoom = map.getZoom();
   selectedPlaylist.cancelAllTracksFading();
   marker.cancelMoving();
   marker.moveBetween(
@@ -211,6 +218,8 @@ onClickNoteIcon = () => {
     onMoving,
     onMovingEnd
   );
+  map.setCenter(selectedPlaylist.getPosition());
+  map.setZoom(selectedPlaylist.convertVehicleToZoom());
   return false;
 };
 
@@ -224,17 +233,6 @@ onMoving = () => {
 };
 
 /**
- * Markerの自動移動終了時に実行される処理
- */
-onMovingEnd = () => {
-  marker.setPosition(positionBeforeMoving);
-  positionBeforeMoving = null;
-  for (let track of selectedPlaylist.tracks) {
-    track.applyVolume(track.calculateVolume(positionBeforeMoving), true);
-  }
-};
-
-/**
  * プレイモード時用の要素をクリックした時のハンドラ
  *   再生モードから抜ける
  */
@@ -242,10 +240,14 @@ onClickPlayModeContent = () => {
   if (!isPlayMode) {
     return;
   }
-  if (positionBeforeMoving) {
+  if (beforeMovingMap.markerPosition) {
     marker.cancelMoving();
-    marker.setPosition(positionBeforeMoving);
-    positionBeforeMoving = null;
+    marker.setPosition(beforeMovingMap.markerPosition);
+    map.setCenter(beforeMovingMap.mapCenter);
+    map.setZoom(beforeMovingMap.mapZoom);
+    beforeMovingMap.markerPosition = null;
+    beforeMovingMap.mapCenter = null;
+    beforeMovingMap.mapZoom = null;
   }
   for (let track of selectedPlaylist.tracks) {
     track.setVisible(false);
@@ -264,6 +266,11 @@ onClickPlayModeContent = () => {
   isPlayMode = false;
   return false;
 };
+
+/**
+ * Markerの自動移動終了時に実行される処理
+ */
+onMovingEnd = onClickPlayModeContent;
 
 /**
  * データ取得完了時のコールバック

@@ -42,6 +42,10 @@ const
   M_PER_MS_FAST = 0.016,
   /** 徒歩/無指定時のミリ秒速(m) */
   M_PER_MS_DEFAULT = 0.001,
+  /** 列車/車の自動再生時のズームレベル */
+  ZOOM_WIDE = 12,
+  /** 徒歩/無指定時の自動再生時のズームレベル */
+  ZOOM_NARROW = 16,
   /** M_PER_MS_FASTの適用対象となるvehicle属性値 */
   FAST_VEHICLES = ['train', 'Train', 'car', 'Car'];
 
@@ -194,6 +198,16 @@ AMSPlaylist = class extends AMSInfoBox {
       return M_PER_MS_FAST;
     }
     return M_PER_MS_DEFAULT;
+  }
+
+  /**
+   * vehicle属性から対応するズームレベルを返す
+   */
+  convertVehicleToZoom() {
+    if (FAST_VEHICLES.indexOf(this.vehicle) > -1) {
+      return ZOOM_WIDE;
+    }
+    return ZOOM_NARROW;
   }
 
   /**
