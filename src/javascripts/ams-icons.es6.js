@@ -6,19 +6,19 @@ const
   /** アイコン情報 */
   ICON_MAP_ = new Map([
     ['main', {
-      href: '//audiomigratory.com/',
+      href: 'http://audiomigratory.com/',
       src: 'images/am-icon.png',
       alt: 'am-icon',
       html: undefined,
     }],
     ['twitter', {
-      href: '//twitter.com/audiomigratory',
+      href: 'https://twitter.com/audiomigratory',
       src: 'images/twitter-icon.gif',
       alt: 'twitter-icon',
       html: undefined,
     }],
     ['facebook', {
-      href: '//www.facebook.com/ryu.furusawa',
+      href: 'https://www.facebook.com/ryu.furusawa',
       src: 'images/facebook-icon.gif',
       alt: 'facebook-icon',
       html: undefined,
