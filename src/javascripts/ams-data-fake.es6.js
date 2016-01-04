@@ -33,7 +33,7 @@ getParsedData = (paramMap, onSuccess, onError) => {
  * @exports
  */
 init = () => {
-  isAJAXSimulating = !FAKE_DATA;
+  isAJAXSimulating = typeof FAKE_DATA === 'undefined';
   if (isAJAXSimulating) {
     $('head').append(HTML);
   }
