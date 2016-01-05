@@ -26,6 +26,8 @@ const
   PLAY_MODE_CLASS = 'play-mode',
   /** プレイリストアイコン要素のクラス名 */
   PLAYLIST_MASK_CLASS = 'playlist-mask',
+  /** 音符アイコン要素のクラス名 */
+  NOTE_ICON_CLASS = 'note-icon',
   /** プレイモード時のプレイリスト情報要素のクラス名 */
   INFO_CLASS = 'info',
   /** プレイモードから抜けるトリガーとなる要素のクラス名 */
@@ -88,7 +90,10 @@ AMSPlaylist = class extends AMSInfoBox {
           '</span>' +
         '</p>' +
         '<p>' +
-          `<img src="${NOTE_ICON}" ${IMG_SIZE_ATTR}>` +
+          '<img ' +
+            `src="${NOTE_ICON}" ${IMG_SIZE_ATTR} ` +
+            `class="${NOTE_ICON_CLASS}"` +
+          '>' +
         '</p>' +
       '</div>';
     super(data, content);
