@@ -32,7 +32,7 @@ Audio.prototype.playOnLoad = function() {
  */
 Audio.prototype.stop = function() {
   this.pause();
-  this.load();
+  this.currentTime = 0;
 };
 
 /**
