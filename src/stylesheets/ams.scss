@@ -1,4 +1,10 @@
 .ams {
   height: 100%;
   position: relative;
+
+  @import './classes/ams-map';
+  @import './classes/ams-info-box';
+  @import './classes/ams-playlist';
+  @import './classes/ams-track';
+  @import './ams-icons';
 }
