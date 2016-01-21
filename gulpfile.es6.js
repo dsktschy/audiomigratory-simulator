@@ -180,26 +180,15 @@ gulp.task('pleeease', ['sass'], () => {
       `${srcCSSDir}bundle.css`,
     ], {base: srcCSSDir})
     .pipe($.plumber(plumberOpt))
-    .pipe($.pleeease({
-      'autoprefixer': {'browsers': ['last 4 versions']},
-      'rem': true,
-      'minifier': false,
-      'sourcemaps': false,
-    }))
-    .pipe(gulp.dest(srcCSSDir));
-});
-
-gulp.task('cssmin', ['pleeease'], () => {
-  return gulp
-    .src([
-      `${srcCSSDir}bundle.css`,
-    ], {base: srcCSSDir})
-    .pipe($.plumber(plumberOpt))
     .pipe($.if(
       process.env.NODE_ENV !== 'production',
       $.sourcemaps.init({loadMaps: true})
     ))
-    .pipe($.cssmin())
+    .pipe($.pleeease({
+      'autoprefixer': {'browsers': ['last 4 versions']},
+      'rem': true,
+      'minifier': true,
+    }))
     .pipe($.rename({suffix: '.min'}))
     .pipe($.if(
       process.env.NODE_ENV !== 'production',
@@ -208,7 +197,7 @@ gulp.task('cssmin', ['pleeease'], () => {
     .pipe(gulp.dest(publicCSSDir));
 });
 
-gulp.task('css', ['cssmin'], () => {
+gulp.task('css', ['pleeease'], () => {
   return del([
     `${srcCSSDir}**/*.css`,
   ], (err, paths) => {
